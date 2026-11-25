@@ -1,0 +1,211 @@
+{
+  "name": "ai-change-reviewer",
+  "displayName": "AI Change Reviewer",
+  "description": "Explain, categorise and approve AI-written code changes, file by file.",
+  "version": "0.0.2",
+  "publisher": "michaeljude",
+  "license": "MIT",
+  "preview": true,
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#1E3A6E",
+    "theme": "dark"
+  },
+  "homepage": "https://github.com/michaeljude/ai-change-reviewer#readme",
+  "bugs": {
+    "url": "https://github.com/michaeljude/ai-change-reviewer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaeljude/ai-change-reviewer.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "AI",
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "code review",
+    "ai",
+    "git",
+    "monorepo",
+    "copilot",
+    "cursor",
+    "claude",
+    "approve"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aiChangeReviewer",
+          "title": "Change Review",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "aiChangeReviewer": [
+        {
+          "type": "webview",
+          "id": "aiChangeReviewer.changes",
+          "name": "Local changes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "aiChangeReviewer.runReview",
+        "title": "Run AI review",
+        "category": "Change Review",
+        "icon": "$(play)"
+      },
+      {
+        "command": "aiChangeReviewer.refresh",
+        "title": "Refresh changes",
+        "category": "Change Review",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "aiChangeReviewer.openSettings",
+        "title": "Settings",
+        "category": "Change Review",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "aiChangeReviewer.clearSavedResults",
+        "title": "Clear saved AI results",
+        "category": "Change Review"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "aiChangeReviewer.runReview",
+          "when": "view == aiChangeReviewer.changes",
+          "group": "navigation@1"
+        },
+        {
+          "command": "aiChangeReviewer.refresh",
+          "when": "view == aiChangeReviewer.changes",
+          "group": "navigation@2"
+        },
+        {
+          "command": "aiChangeReviewer.openSettings",
+          "when": "view == aiChangeReviewer.changes",
+          "group": "navigation@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Change Reviewer",
+      "properties": {
+        "aiChangeReviewer.backend": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "copilot",
+            "cursor",
+            "claude"
+          ],
+          "enumDescriptions": [
+            "Copilot in VS Code, the Cursor agent CLI in Cursor.",
+            "GitHub Copilot through VS Code's Language Model API. No API key; uses your Copilot plan. Not available in Cursor.",
+            "Cursor's agent CLI in print mode. Uses your Cursor plan.",
+            "Claude Code CLI in print mode. Uses your Claude plan."
+          ],
+          "default": "auto",
+          "description": "Which AI runs the review."
+        },
+        "aiChangeReviewer.cursorCommand": {
+          "type": "string",
+          "default": "agent",
+          "description": "Command for the Cursor agent CLI (for example `agent` or `cursor-agent`, or a full path)."
+        },
+        "aiChangeReviewer.claudeCommand": {
+          "type": "string",
+          "default": "claude",
+          "description": "Command for the Claude Code CLI (or a full path)."
+        },
+        "aiChangeReviewer.contextLines": {
+          "type": "number",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Lines of context sent around each change. More context gives better explanations but costs more."
+        },
+        "aiChangeReviewer.askBeforeTokens": {
+          "type": "number",
+          "default": 50000,
+          "description": "Ask before sending a review estimated to be larger than this many tokens."
+        },
+        "aiChangeReviewer.maxFileDiffChars": {
+          "type": "number",
+          "default": 20000,
+          "description": "A single file's diff longer than this is shortened before sending, and the AI is told it was shortened."
+        },
+        "aiChangeReviewer.timeoutSeconds": {
+          "type": "number",
+          "default": 300,
+          "description": "Give up on a CLI backend after this many seconds."
+        },
+        "aiChangeReviewer.areas": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {
+            "Mobile": [
+              "apps/mobile/",
+              "mobile/",
+              "ios/",
+              "android/",
+              "app/"
+            ],
+            "Web": [
+              "apps/web/",
+              "web/",
+              "frontend/"
+            ],
+            "Backend": [
+              "services/",
+              "server/",
+              "backend/",
+              "api/",
+              "apps/api/"
+            ],
+            "Shared": [
+              "packages/",
+              "libs/",
+              "shared/"
+            ]
+          },
+          "description": "Areas of the repo, as path prefixes. Files are grouped by the first area whose prefix matches; others go to \"Other\"."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile && node --test out/test/*.test.js",
+    "package": "npm run compile && vsce package",
+    "vscode:prepublish": "npm run compile"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.4.0"
+  }
+}
