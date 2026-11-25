@@ -8,7 +8,7 @@ import * as vscode from 'vscode';
  * the window. Everything here stays in the extension host and writes with the configuration API.
  */
 
-const SECTION = 'aiChangeReviewer';
+const SECTION = 'reviewLens';
 
 interface NumberSetting {
   key: string;
@@ -152,7 +152,7 @@ export async function openSettingsPicker(): Promise<void> {
       },
     ];
     const pick = await vscode.window.showQuickPick(items, {
-      title: 'Change Review settings',
+      title: 'ReviewLens settings',
       placeHolder: 'Pick a setting to change. Press Esc when done.',
     });
     if (!pick) {

@@ -1,14 +1,14 @@
-# AI Change Reviewer
+# ReviewLens
 
 Understand and approve AI-written code changes, file by file.
 
-When an AI agent changes many files at once, AI Change Reviewer lists what changed, groups it by area of your repo or by type of change, and, when you ask, explains **why** each file changed, **what** changed and **what it might affect**. You approve or request changes per file, right in the editor.
+When an AI agent changes many files at once, ReviewLens lists what changed, groups it by area of your repo or by type of change, and, when you ask, explains **why** each file changed, **what** changed and **what it might affect**. You approve or request changes per file, right in the editor.
 
 Works in **VS Code** and **Cursor**. AI only runs when you press the button.
 
 > **Preview.** This is an early release that covers your local, uncommitted changes. Pull request and merge request review is planned.
 
-![Change Review panel and a file's review](images/screenshot-review.png)
+![ReviewLens panel and a file's review](images/screenshot-review.png)
 
 ## Features
 
@@ -21,14 +21,14 @@ Works in **VS Code** and **Cursor**. AI only runs when you press the button.
 
 ## Getting started
 
-1. Open a folder that is a Git repository and click **Change Review** in the activity bar.
+1. Open a folder that is a Git repository and click **ReviewLens** in the activity bar.
 2. Browse your changes. Nothing is sent to any AI yet.
-3. Click **Run AI on N files**, or run **Change Review: Run AI review** from the command palette.
+3. Click **Run AI on N files**, or run **ReviewLens: Run AI review** from the command palette.
 4. Click a file to read its review, then approve it or request changes.
 
 ### Choosing the AI
 
-Set `aiChangeReviewer.backend`:
+Set `reviewLens.backend`:
 
 | Value | Uses | Needs |
 |---|---|---|
@@ -44,7 +44,7 @@ Set `aiChangeReviewer.backend`:
 - Only the changed sections plus a few lines of context are sent, not whole files.
 - All files go in one request per review.
 - Lockfiles, binary files, deleted files and build output are never sent.
-- You're asked first when a review would be larger than `aiChangeReviewer.askBeforeTokens`.
+- You're asked first when a review would be larger than `reviewLens.askBeforeTokens`.
 
 ## Privacy
 
@@ -52,18 +52,18 @@ When you run a review, the changed sections of your files (and their paths) are 
 
 ## Settings
 
-Click the gear in the Change Review panel, or run **Change Review: Settings**, to change these from a quick menu. You can also edit them in your editor's settings.
+Click the gear in the ReviewLens panel, or run **ReviewLens: Settings**, to change these from a quick menu. You can also edit them in your editor's settings.
 
 | Setting | Default | What it does |
 |---|---|---|
-| `aiChangeReviewer.backend` | `auto` | Which AI runs the review (see above) |
-| `aiChangeReviewer.cursorCommand` | `agent` | Command or full path for the Cursor agent CLI |
-| `aiChangeReviewer.claudeCommand` | `claude` | Command or full path for the Claude Code CLI |
-| `aiChangeReviewer.contextLines` | `10` | Lines of context sent around each change |
-| `aiChangeReviewer.askBeforeTokens` | `50000` | Ask before sending a bigger review |
-| `aiChangeReviewer.maxFileDiffChars` | `20000` | Shorten a single file's changes above this size |
-| `aiChangeReviewer.timeoutSeconds` | `300` | Give up on a CLI backend after this long |
-| `aiChangeReviewer.areas` | Mobile / Web / Backend / Shared | Path prefixes that define your repo's areas |
+| `reviewLens.backend` | `auto` | Which AI runs the review (see above) |
+| `reviewLens.cursorCommand` | `agent` | Command or full path for the Cursor agent CLI |
+| `reviewLens.claudeCommand` | `claude` | Command or full path for the Claude Code CLI |
+| `reviewLens.contextLines` | `10` | Lines of context sent around each change |
+| `reviewLens.askBeforeTokens` | `50000` | Ask before sending a bigger review |
+| `reviewLens.maxFileDiffChars` | `20000` | Shorten a single file's changes above this size |
+| `reviewLens.timeoutSeconds` | `300` | Give up on a CLI backend after this long |
+| `reviewLens.areas` | Mobile / Web / Backend / Shared | Path prefixes that define your repo's areas |
 
 ## Known limitations
 

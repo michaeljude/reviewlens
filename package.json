@@ -1,6 +1,6 @@
 {
-  "name": "ai-change-reviewer",
-  "displayName": "AI Change Reviewer",
+  "name": "reviewlens",
+  "displayName": "ReviewLens: AI Change Review",
   "description": "Explain, categorise and approve AI-written code changes, file by file.",
   "version": "0.0.2",
   "publisher": "michaeljude",
@@ -35,7 +35,9 @@
     "copilot",
     "cursor",
     "claude",
-    "approve"
+    "approve",
+    "reviewlens",
+    "change review"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
@@ -45,69 +47,69 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "aiChangeReviewer",
-          "title": "Change Review",
+          "id": "reviewLens",
+          "title": "ReviewLens",
           "icon": "media/icon.svg"
         }
       ]
     },
     "views": {
-      "aiChangeReviewer": [
+      "reviewLens": [
         {
           "type": "webview",
-          "id": "aiChangeReviewer.changes",
+          "id": "reviewLens.changes",
           "name": "Local changes"
         }
       ]
     },
     "commands": [
       {
-        "command": "aiChangeReviewer.runReview",
+        "command": "reviewLens.runReview",
         "title": "Run AI review",
-        "category": "Change Review",
+        "category": "ReviewLens",
         "icon": "$(play)"
       },
       {
-        "command": "aiChangeReviewer.refresh",
+        "command": "reviewLens.refresh",
         "title": "Refresh changes",
-        "category": "Change Review",
+        "category": "ReviewLens",
         "icon": "$(refresh)"
       },
       {
-        "command": "aiChangeReviewer.openSettings",
+        "command": "reviewLens.openSettings",
         "title": "Settings",
-        "category": "Change Review",
+        "category": "ReviewLens",
         "icon": "$(gear)"
       },
       {
-        "command": "aiChangeReviewer.clearSavedResults",
+        "command": "reviewLens.clearSavedResults",
         "title": "Clear saved AI results",
-        "category": "Change Review"
+        "category": "ReviewLens"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "aiChangeReviewer.runReview",
-          "when": "view == aiChangeReviewer.changes",
+          "command": "reviewLens.runReview",
+          "when": "view == reviewLens.changes",
           "group": "navigation@1"
         },
         {
-          "command": "aiChangeReviewer.refresh",
-          "when": "view == aiChangeReviewer.changes",
+          "command": "reviewLens.refresh",
+          "when": "view == reviewLens.changes",
           "group": "navigation@2"
         },
         {
-          "command": "aiChangeReviewer.openSettings",
-          "when": "view == aiChangeReviewer.changes",
+          "command": "reviewLens.openSettings",
+          "when": "view == reviewLens.changes",
           "group": "navigation@3"
         }
       ]
     },
     "configuration": {
-      "title": "AI Change Reviewer",
+      "title": "ReviewLens",
       "properties": {
-        "aiChangeReviewer.backend": {
+        "reviewLens.backend": {
           "type": "string",
           "enum": [
             "auto",
@@ -124,39 +126,39 @@
           "default": "auto",
           "description": "Which AI runs the review."
         },
-        "aiChangeReviewer.cursorCommand": {
+        "reviewLens.cursorCommand": {
           "type": "string",
           "default": "agent",
           "description": "Command for the Cursor agent CLI (for example `agent` or `cursor-agent`, or a full path)."
         },
-        "aiChangeReviewer.claudeCommand": {
+        "reviewLens.claudeCommand": {
           "type": "string",
           "default": "claude",
           "description": "Command for the Claude Code CLI (or a full path)."
         },
-        "aiChangeReviewer.contextLines": {
+        "reviewLens.contextLines": {
           "type": "number",
           "default": 10,
           "minimum": 0,
           "maximum": 100,
           "description": "Lines of context sent around each change. More context gives better explanations but costs more."
         },
-        "aiChangeReviewer.askBeforeTokens": {
+        "reviewLens.askBeforeTokens": {
           "type": "number",
           "default": 50000,
           "description": "Ask before sending a review estimated to be larger than this many tokens."
         },
-        "aiChangeReviewer.maxFileDiffChars": {
+        "reviewLens.maxFileDiffChars": {
           "type": "number",
           "default": 20000,
           "description": "A single file's diff longer than this is shortened before sending, and the AI is told it was shortened."
         },
-        "aiChangeReviewer.timeoutSeconds": {
+        "reviewLens.timeoutSeconds": {
           "type": "number",
           "default": 300,
           "description": "Give up on a CLI backend after this many seconds."
         },
-        "aiChangeReviewer.areas": {
+        "reviewLens.areas": {
           "type": "object",
           "additionalProperties": {
             "type": "array",

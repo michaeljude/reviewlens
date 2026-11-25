@@ -2,6 +2,7 @@
 
 ## 0.0.2 (preview)
 
+- Renamed to **ReviewLens**. Commands and settings now start with `reviewLens.` (for example `reviewLens.backend`).
 - Fixed: opening the extension's settings froze Cursor. Settings now open as a quick menu inside the editor that shows each setting's current value and lets you change it, including areas.
 - Clearer error when an AI CLI fails, with a sign-in hint when its login has expired.
 
@@ -9,7 +10,7 @@
 
 First release.
 
-- Change Review panel listing uncommitted changes (staged, unstaged and new files).
+- ReviewLens panel listing uncommitted changes (staged, unstaged and new files).
 - Group by area (configurable path prefixes) or by change type; obvious files are categorised by path rules without AI.
 - Warning when code that changes behaviour changed but no tests did.
 - **Run AI review** on demand only. Results are saved per file version, so unchanged files are never sent again. Asks before large reviews.

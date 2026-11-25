@@ -34,7 +34,7 @@ type SidebarMessage =
   | { type: 'decide'; path: string; decision: Decision };
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
-  static readonly viewId = 'aiChangeReviewer.changes';
+  static readonly viewId = 'reviewLens.changes';
   private view?: vscode.WebviewView;
 
   constructor(
@@ -48,7 +48,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   resolveWebviewView(view: vscode.WebviewView): void {
     this.view = view;
     view.webview.options = { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(this.extensionUri, 'media')] };
-    view.webview.html = html(view.webview, this.extensionUri, 'sidebar.js', 'Change Review');
+    view.webview.html = html(view.webview, this.extensionUri, 'sidebar.js', 'ReviewLens');
     view.webview.onDidReceiveMessage((m: SidebarMessage) => this.onMessage(m));
     view.onDidChangeVisibility(() => {
       if (view.visible) {
@@ -69,7 +69,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         void this.controller.refresh();
         break;
       case 'settings':
-        void vscode.commands.executeCommand('aiChangeReviewer.openSettings');
+        void vscode.commands.executeCommand('reviewLens.openSettings');
         break;
       case 'approveLowRisk':
         void this.controller.approveLowRisk();
@@ -119,7 +119,7 @@ export class DetailPanel implements vscode.Disposable {
       this.push();
       return;
     }
-    const panel = vscode.window.createWebviewPanel('aiChangeReviewer.detail', title, vscode.ViewColumn.Active, {
+    const panel = vscode.window.createWebviewPanel('reviewLens.detail', title, vscode.ViewColumn.Active, {
       enableScripts: true,
       retainContextWhenHidden: true,
       localResourceRoots: [vscode.Uri.joinPath(this.extensionUri, 'media')],

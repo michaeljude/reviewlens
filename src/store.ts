@@ -14,9 +14,9 @@ interface SavedDecision {
   decision: Decision;
 }
 
-const ANALYSES = 'acr.analyses.v1';
-const DECISIONS = 'acr.decisions.v1';
-const SUMMARY = 'acr.summary.v1';
+const ANALYSES = 'reviewlens.analyses.v1';
+const DECISIONS = 'reviewlens.decisions.v1';
+const SUMMARY = 'reviewlens.summary.v1';
 const MAX_ANALYSES = 1000;
 
 /** Saved AI results (by file version) and per-file decisions, kept per workspace. */

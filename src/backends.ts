@@ -60,7 +60,7 @@ async function runCopilot(prompt: string, token: vscode.CancellationToken): Prom
   const model = models[0];
   const response = await model.sendRequest(
     [vscode.LanguageModelChatMessage.User(prompt)],
-    { justification: 'AI Change Reviewer explains your uncommitted changes when you run a review.' },
+    { justification: 'ReviewLens explains your uncommitted changes when you run a review.' },
     token,
   );
   let text = '';
@@ -116,7 +116,7 @@ function runCli(
     child.on('error', (err: NodeJS.ErrnoException) => {
       const msg =
         err.code === 'ENOENT'
-          ? `Couldn't find the ${label} (\`${command}\`). Install it or set its command in the AI Change Reviewer settings.`
+          ? `Couldn't find the ${label} (\`${command}\`). Install it or set its command in the ReviewLens settings.`
           : `${label} failed to start: ${err.message}`;
       finish(() => reject(new BackendError(msg)));
     });

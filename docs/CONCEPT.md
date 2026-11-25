@@ -1,4 +1,4 @@
-# AI Change Reviewer: concept
+# ReviewLens: concept
 
 A VS Code / Cursor extension concept for reviewing AI-written code: it explains **why** each file changed, **what** changed, and **what it might affect**, so a human can understand and approve a large change quickly.
 

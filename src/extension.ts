@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext): void {
   const sidebar = new SidebarProvider(context.extensionUri, controller, detail);
 
   const status = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 50);
-  status.command = 'workbench.view.extension.aiChangeReviewer';
+  status.command = 'workbench.view.extension.reviewLens';
   const updateStatus = () => {
     const s = controller.viewState();
     if (!s.root || s.files.length === 0) {
@@ -45,14 +45,14 @@ export function activate(context: vscode.ExtensionContext): void {
     watcher,
     controller.onDidChange(updateStatus),
     vscode.window.registerWebviewViewProvider(SidebarProvider.viewId, sidebar),
-    vscode.commands.registerCommand('aiChangeReviewer.runReview', () => controller.runReview()),
-    vscode.commands.registerCommand('aiChangeReviewer.refresh', () => controller.refresh()),
-    vscode.commands.registerCommand('aiChangeReviewer.clearSavedResults', () => controller.clearSavedResults()),
-    vscode.commands.registerCommand('aiChangeReviewer.openSettings', () => openSettingsPicker()),
+    vscode.commands.registerCommand('reviewLens.runReview', () => controller.runReview()),
+    vscode.commands.registerCommand('reviewLens.refresh', () => controller.refresh()),
+    vscode.commands.registerCommand('reviewLens.clearSavedResults', () => controller.clearSavedResults()),
+    vscode.commands.registerCommand('reviewLens.openSettings', () => openSettingsPicker()),
     vscode.workspace.onDidSaveTextDocument(scheduleRefresh),
     vscode.workspace.onDidChangeWorkspaceFolders(scheduleRefresh),
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration('aiChangeReviewer')) {
+      if (e.affectsConfiguration('reviewLens')) {
         scheduleRefresh();
       }
     }),

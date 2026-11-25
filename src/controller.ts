@@ -48,7 +48,7 @@ export interface ViewState {
 }
 
 function config() {
-  return vscode.workspace.getConfiguration('aiChangeReviewer');
+  return vscode.workspace.getConfiguration('reviewLens');
 }
 
 export class Controller implements vscode.Disposable {
@@ -272,7 +272,7 @@ export class Controller implements vscode.Disposable {
       // Not awaited, so the panel leaves its "Reviewing…" state while the message is still showing.
       void vscode.window.showErrorMessage(`AI review failed. ${msg}`, 'Open settings').then((pick) => {
         if (pick === 'Open settings') {
-          void vscode.commands.executeCommand('aiChangeReviewer.openSettings');
+          void vscode.commands.executeCommand('reviewLens.openSettings');
         }
       });
     } finally {
