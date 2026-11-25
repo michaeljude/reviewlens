@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Change Review – pull request</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#16171B}
+a{color:#8FBCFF}a:hover{color:#B9D5FF}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1820px; display: flex; flex-direction: column; background: #1E1F24; color: #D7DAE0; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.45">
+
+<header style="height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px; background: #18191D; border-bottom: 1px solid #2E3138; color: #9BA1AC; font-size: 12px">
+<span>orders-monorepo</span>
+<span aria-hidden="true">·</span>
+<span style="color: #D7DAE0">Change Review</span>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Activity bar" style="width: 52px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; background: #18191D; border-right: 1px solid #2E3138">
+<button aria-label="Explorer" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+</button>
+<button aria-label="Search" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+</button>
+<button aria-label="Source control" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"></circle><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="7" r="2.5"></circle><path d="M6 7.5v9"></path><path d="M18 9.5c0 5-7 4-11.5 7.5"></path></svg>
+</button>
+<button aria-label="Change Review" aria-current="true" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: #2C3647; color: #FFFFFF; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h12"></path><path d="M4 10h7"></path><path d="M4 15h5"></path><circle cx="16" cy="15" r="4"></circle><path d="m19 18 2.5 2.5"></path></svg>
+</button>
+</nav>
+
+<aside aria-label="Change Review" style="flex: 0 1 340px; min-width: 280px; display: flex; flex-direction: column; background: #22242A; border-right: 1px solid #2E3138">
+
+<div style="height: 40px; display: flex; align-items: center; padding: 0 18px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #9BA1AC">CHANGE REVIEW</span>
+</div>
+
+<div style="display: flex; gap: 4px; padding: 0 12px 12px">
+<a href="Main.dc.html" style="flex: 1; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 8px; color: #C3C8D0; font-size: 13px; font-weight: 500; text-decoration: none">Local changes <span style="padding: 1px 7px; border-radius: 999px; background: #33363D; font-size: 11px; color: #C3C8D0">6</span></a>
+<button aria-current="page" style="flex: 1; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 8px; background: #2C3647; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Pull requests <span style="padding: 1px 7px; border-radius: 999px; background: #3B4D6B; font-size: 11px">4</span></button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px; margin: 0 12px 14px; padding: 12px 14px; border: 1px solid #33363D; border-radius: 10px; background: #1E1F24; font-size: 12.5px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #7FD1A0"></span>GitHub</span><span style="color: #9BA1AC">your-org/orders-monorepo</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #7FD1A0"></span>GitLab</span><span style="color: #9BA1AC">your-group/orders-monorepo</span></div>
+</div>
+
+<div style="padding: 4px 18px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">REVIEW REQUESTED FROM YOU</div>
+<sc-for list="{{prs}}" as="pr" hint-placeholder-count="4">
+<button style="{{pr.rowStyle}}">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #9BA1AC">
+<span style="{{pr.provStyle}}">{{pr.prov}}</span>
+<span style="font-family: 'JetBrains Mono', monospace">{{pr.num}}</span>
+<sc-if value="{{pr.agent}}" hint-placeholder-val="{{ true }}"><span style="padding: 0 6px; border-radius: 4px; background: rgba(183,156,255,0.15); color: #CDB9FF; font-weight: 600">AI-written</span></sc-if>
+<span style="{{pr.dotStyle}}" title="{{pr.riskLabel}}"></span>
+</span>
+<span style="font-size: 13.5px; font-weight: 600; color: #EEF0F3">{{pr.title}}</span>
+<span style="font-size: 12px; color: #9BA1AC">{{pr.meta}}</span>
+</button>
+</sc-for>
+
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px; padding: 24px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: #9BA1AC">
+<span style="padding: 1px 8px; border-radius: 6px; background: #2C3647; color: #C9DCFF; font-weight: 600">GitHub #482</span>
+<span style="font-family: 'JetBrains Mono', monospace">feat/cancel-orders → main</span>
+<span>· opened today · written with an AI agent</span>
+</div>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF">Order cancellation with refunds</h1>
+<div style="font-size: 13px; color: #9BA1AC">No description provided — the summary below was generated from the diff.</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Check out branch</button>
+<button style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Open on GitHub</button>
+<button style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Submit review</button>
+</div>
+</div>
+
+<section style="padding: 18px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">WHAT THIS PR DOES</h2>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: #EEF0F3">Lets people cancel pending or paid orders from the app. Paid orders are refunded automatically. It touches three areas: a new status in the shared types, a cancel endpoint plus refund changes and a migration in the API, and a Cancel button in the mobile app.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 14px; font-size: 12.5px; color: #9BA1AC">
+<span><span style="color: #EEF0F3; font-weight: 600">6</span> files across 3 areas</span>
+<span style="font-family: 'JetBrains Mono', monospace"><span style="color: #7FD1A0">+210</span> <span style="color: #FF9E96">−23</span></span>
+<span><span style="color: #FFB4AC; font-weight: 600">2</span> high-risk changes</span>
+<span><span style="color: #F7CD8A; font-weight: 600">3</span> open comment threads</span>
+<span>Types: UI · Business logic · API · Shared types · Database · <span style="color: #F7CD8A; font-weight: 600">no unit tests</span></span>
+</div>
+</section>
+
+<section style="padding: 18px 20px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg>
+PROOF FOR REVIEWERS · OPTIONAL
+</h2>
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; background: rgba(247,168,208,0.14); color: #F7A8D0; font-size: 12px; font-weight: 600">Suggested: this PR has UI changes</span>
+</div>
+<p style="margin: 6px 0 14px; font-size: 13px; color: #9BA1AC">Show it working. Recordings and screenshots are added to the PR description, so reviewers can see the change without running it.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch">
+
+<sc-for list="{{proofs}}" as="p" hint-placeholder-count="2">
+<div style="flex: 1 1 240px; max-width: 320px; min-width: 0; display: flex; flex-direction: column; border: 1px solid #33363D; border-radius: 10px; overflow: hidden; background: #1E1F24">
+<div style="position: relative; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #15161A; border-bottom: 1px solid #2E3138; color: #9BA1AC; font-size: 12px">
+<sc-if value="{{p.isVideo}}" hint-placeholder-val="{{ true }}">
+<span style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.10); color: #FFFFFF">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+</span>
+<span>Recording preview</span>
+<span style="position: absolute; right: 8px; bottom: 8px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,0.6); color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 11px">{{p.duration}}</span>
+</sc-if>
+<sc-if value="{{p.isImage}}" hint-placeholder-val="{{ false }}">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="m21 16-5-5-9 9"></path></svg>
+<span>Screenshot preview</span>
+</sc-if>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 10px 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #EEF0F3; word-break: break-all">{{p.name}}</span>
+<span style="font-size: 12px; color: #9BA1AC">{{p.meta}}</span>
+<span style="font-size: 12px; color: #9BA1AC">Shows: <span style="color: #6FD6C6; font-weight: 600">{{p.linked}}</span></span>
+</div>
+<div style="display: flex; gap: 6px; padding: 0 12px 12px">
+<button style="flex: 1; min-height: 32px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Preview</button>
+<button onClick="{{p.remove}}" aria-label="{{p.removeAria}}" style="flex: 1; min-height: 32px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Remove</button>
+</div>
+</div>
+</sc-for>
+
+<div style="flex: 1 1 240px; max-width: 320px; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 18px; border: 1.5px dashed #4A4E58; border-radius: 10px; text-align: center">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9BA1AC" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+<span style="font-size: 13.5px; font-weight: 600; color: #EEF0F3">Drop a recording or image</span>
+<span style="font-size: 12px; color: #9BA1AC">MP4, MOV, GIF, PNG or JPG · up to 100 MB</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px">
+<button onClick="{{addProof}}" style="min-height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 12.5px; font-weight: 600; cursor: pointer">Browse files</button>
+<button style="min-height: 34px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Record simulator</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #FFFFFF">Review lanes</h2>
+<span style="font-size: 12.5px; color: #9BA1AC">One PR, split by area. Each lane is reviewed on its own, by its owner.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-for list="{{lanes}}" as="lane" hint-placeholder-count="3">
+<div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 12px; border-bottom: 1px solid #33363D">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="{{lane.dotStyle}}"></span>
+<span style="font-size: 14px; font-weight: 700; color: #FFFFFF">{{lane.label}}</span>
+<span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11.5px"><span style="color: #7FD1A0">{{lane.add}}</span> <span style="color: #FF9E96">{{lane.del}}</span></span>
+</div>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9BA1AC">{{lane.path}}</span>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; padding: 4px 16px">
+<sc-for list="{{lane.files}}" as="lf" hint-placeholder-count="2">
+<div style="display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #2E3138">
+<div style="flex: 1; min-width: 0">
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #EEF0F3; word-break: break-all">{{lf.name}}</div>
+<div style="margin-top: 2px; font-size: 12.5px; color: #9BA1AC"><span style="{{lf.catStyle}}">{{lf.cat}}</span> · {{lf.why}}</div>
+</div>
+<span style="{{lf.pillStyle}}">{{lf.risk}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 16px 16px">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #9BA1AC"><span>Owner: {{lane.owner}}</span><span>{{lane.progress}}</span></div>
+<div style="height: 5px; border-radius: 999px; background: #33363D"><div style="{{lane.barStyle}}"></div></div>
+<button style="min-height: 36px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 600; cursor: pointer">Review this lane</button>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+
+<section style="flex: 3 1 460px; min-width: 0; padding: 18px 20px 8px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>
+TEAMMATE COMMENTS · SYNCED FROM GITHUB
+</h2>
+<span style="font-size: 12px; color: #9BA1AC">Fix in the editor, reply and resolve from here</span>
+</div>
+<sc-for list="{{threads}}" as="th" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid #33363D; margin-top: 10px">
+<span style="{{th.avatarStyle}}" aria-hidden="true">{{th.initials}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px">
+<span style="font-weight: 600; color: #EEF0F3">{{th.author}}</span>
+<span style="color: #9BA1AC">{{th.role}}</span>
+<span style="color: #9BA1AC">· {{th.when}}</span>
+<span style="{{th.statePill}}">{{th.state}}</span>
+</div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FBCFF">{{th.where}}</div>
+<div style="font-size: 14px; line-height: 1.5; color: #E4E6EA">{{th.text}}</div>
+<sc-if value="{{th.hasSuggestion}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 6px 0; border: 1px solid #2E3138; border-radius: 6px; background: #17181C; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; overflow-x: auto">
+<div style="display: flex; background: rgba(255,138,128,0.11); padding: 0 12px; white-space: pre; min-width: max-content"><span style="width: 18px; color: #FF9E96">−</span>{{th.sugDel}}</div>
+<div style="display: flex; background: rgba(127,209,160,0.11); padding: 0 12px; white-space: pre; min-width: max-content"><span style="width: 18px; color: #7FD1A0">+</span>{{th.sugAdd}}</div>
+</div>
+</sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px">
+<a href="Comments.dc.html" style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 12.5px; font-weight: 600; text-decoration: none">Jump to code</a>
+<sc-if value="{{th.hasSuggestion}}" hint-placeholder-val="{{ false }}">
+<button style="min-height: 32px; padding: 0 12px; border: 1px solid #3F7A5A; border-radius: 8px; background: rgba(127,209,160,0.12); color: #9FE0B8; font-size: 12.5px; font-weight: 600; cursor: pointer">Apply suggestion</button>
+</sc-if>
+<button style="min-height: 32px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Fix with agent</button>
+<button style="min-height: 32px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Reply</button>
+</div>
+</div>
+</div>
+</sc-for>
+</section>
+
+<section style="flex: 2 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+
+<div style="padding: 18px 20px 8px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">CROSS-LANE CONTRACTS</h2>
+<p style="margin: 0 0 4px; font-size: 12.5px; color: #9BA1AC">Where one lane depends on another.</p>
+<sc-for list="{{contracts}}" as="ct" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 0; border-top: 1px solid #33363D">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #EEF0F3">{{ct.name}}</span>
+<span style="{{ct.pillStyle}}">{{ct.status}}</span>
+</div>
+<span style="font-size: 12.5px; color: #9BA1AC">{{ct.flow}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="padding: 18px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">AI-DRAFTED COMMENTS</h2>
+<p style="margin: 0 0 6px; font-size: 12.5px; color: #9BA1AC">Nothing is posted until you choose.</p>
+<sc-for list="{{drafts}}" as="d" hint-placeholder-count="3">
+<label style="display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-top: 1px solid #33363D; cursor: pointer">
+<input type="checkbox" checked="checked" style="width: 16px; height: 16px; margin: 2px 0 0; accent-color: #4C8DFF">
+<span style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8FBCFF; word-break: break-all">{{d.where}}</span>
+<span style="font-size: 13px; color: #E4E6EA">{{d.text}}</span>
+</span>
+</label>
+</sc-for>
+<button style="width: 100%; margin-top: 10px; min-height: 36px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Post selected to GitHub</button>
+</div>
+
+</section>
+</div>
+
+</main>
+</div>
+
+<footer style="height: 26px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px; background: #1F3A63; color: #E6ECF5; font-size: 12px">
+<span>feat/cancel-orders · GitHub #482</span>
+<span>Change Review · 3 open threads</span>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1820}}'>
+var RISK = {
+  high: { label: 'High', fg: '#FFB4AC', bg: 'rgba(255,138,128,0.16)', dot: '#FF8A80' },
+  medium: { label: 'Medium', fg: '#F7CD8A', bg: 'rgba(242,182,97,0.16)', dot: '#F2B661' },
+  low: { label: 'Low', fg: '#9FE0B8', bg: 'rgba(127,209,160,0.14)', dot: '#7FD1A0' }
+};
+function pill(r) {
+  return 'display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;flex-shrink:0;color:' + r.fg + ';background:' + r.bg;
+}
+var PRS = [
+  { prov: 'GitHub', num: '#482', title: 'Order cancellation with refunds', meta: 'feat/cancel-orders · 6 files · 3 areas', agent: true, risk: 'high', on: true },
+  { prov: 'GitLab', num: '!117', title: 'Shipping-update push notifications', meta: 'feat/ship-push · 14 files · 2 areas', agent: true, risk: 'medium' },
+  { prov: 'GitHub', num: '#479', title: 'Bump payments SDK to v9', meta: 'chore/payments-sdk · 3 files · 1 area', agent: false, risk: 'low' },
+  { prov: 'GitLab', num: '!115', title: 'Fix timezone in order history', meta: 'fix/order-tz · 2 files · 1 area', agent: false, risk: 'low' }
+];
+var LANES = [
+  { label: 'Shared', path: 'packages/shared', color: '#B79CFF', add: '+4', del: '−1', owner: 'platform-team', done: 0,
+    files: [{ name: 'types/order.ts', why: 'Adds the “cancelled” order status', risk: 'high', cat: 'contract' }] },
+  { label: 'Backend', path: 'services/api', color: '#8FBCFF', add: '+131', del: '−12', owner: 'backend-team', done: 1,
+    files: [
+      { name: 'payments/refund.service.ts', why: 'Partial refunds; new error type', risk: 'high', cat: 'logic' },
+      { name: 'orders/cancel.controller.ts', why: 'New cancel endpoint', risk: 'medium', cat: 'api' },
+      { name: 'migrations/…add_cancelled_at.sql', why: 'New column and index', risk: 'medium', cat: 'data' }
+    ] },
+  { label: 'Mobile', path: 'apps/mobile', color: '#6FD6C6', add: '+75', del: '−10', owner: 'mobile-team', done: 1,
+    files: [
+      { name: 'screens/OrderDetail.tsx', why: 'Cancel button and confirm sheet', risk: 'low', cat: 'ui' },
+      { name: 'api/orders.ts', why: 'cancelOrder() client call', risk: 'low', cat: 'api' }
+    ] }
+];
+var CATS = {
+  ui: { label: 'UI', color: '#F7A8D0' },
+  logic: { label: 'Business logic', color: '#FFD580' },
+  api: { label: 'API', color: '#8FBCFF' },
+  contract: { label: 'Shared types', color: '#CDB9FF' },
+  data: { label: 'Database', color: '#7FDBD0' }
+};
+var THREADS = [
+  { initials: 'BR', author: 'Backend reviewer', role: 'backend-team', when: '2h ago', state: 'Open', where: 'services/api/src/payments/refund.service.ts · line 29',
+    text: 'Please keep the original error as the cause — the payments webhook checks error.code and this hides it.',
+    hasSuggestion: true, sugDel: '  } catch (e) { throw new RefundFailedError(e); }', sugAdd: '  } catch (e) { throw new RefundFailedError(e.message, { cause: e }); }', color: '#8FBCFF' },
+  { initials: 'MR', author: 'Mobile reviewer', role: 'mobile-team', when: '1h ago', state: 'Open', where: 'apps/mobile/src/screens/OrderDetail.tsx · line 112',
+    text: 'Can the Cancel button be hidden when we open this screen from a push notification? It feels out of place there.',
+    hasSuggestion: false, color: '#6FD6C6' },
+  { initials: 'PL', author: 'Platform lead', role: 'platform-team', when: '25m ago', state: 'Needs you', where: 'packages/shared/types/order.ts · line 12',
+    text: 'StatusBadge and order.mapper both switch on OrderStatus — they need a cancelled case before this merges.',
+    hasSuggestion: false, color: '#B79CFF' }
+];
+var CONTRACTS = [
+  { name: 'OrderStatus · \'cancelled\'', flow: 'Shared → used by Backend (2) and Mobile (2)', status: '4 not updated', risk: 'high' },
+  { name: 'cancelled_at column', flow: 'Migration → read by the API order repo', status: 'Run first', risk: 'medium' },
+  { name: 'POST /orders/:id/cancel', flow: 'Backend defines → Mobile calls', status: 'Matches', risk: 'low' }
+];
+var DRAFTS = [
+  { where: 'orders/cancel.controller.ts:1', text: 'This route skips the orders rate limiter used by the other order routes.' },
+  { where: 'migrations/20261125_add_cancelled_at.sql:2', text: 'Use CREATE INDEX CONCURRENTLY so writes to orders aren’t blocked.' },
+  { where: 'payments/refund.service.ts:26', text: 'The idempotency key format changed; retries across the deploy won’t de-duplicate.' }
+];
+
+var PROOFS = [
+  { id: 'rec', kind: 'video', name: 'cancel-order-flow.mov', meta: 'Screen recording · iOS simulator · 8.4 MB', duration: '0:42', linked: 'Mobile · OrderDetail.tsx' },
+  { id: 'shot', kind: 'image', name: 'confirm-sheet-android.png', meta: 'Screenshot · Android emulator · 310 KB', linked: 'Mobile · OrderDetail.tsx' },
+  { id: 'err', kind: 'image', name: 'refund-failed-state.png', meta: 'Screenshot · iOS simulator · 280 KB', linked: 'Mobile · error state' }
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    var s = this.state || {};
+    var shown = s.shown ?? { rec: true, shot: true };
+    var self = this;
+    var proofs = PROOFS.filter(function (p) { return shown[p.id]; }).map(function (p) {
+      return {
+        name: p.name, meta: p.meta, linked: p.linked, duration: p.duration || '',
+        isVideo: p.kind === 'video', isImage: p.kind === 'image',
+        removeAria: 'Remove ' + p.name,
+        remove: function () { var n = Object.assign({}, shown); delete n[p.id]; self.setState({ shown: n }); }
+      };
+    });
+    return {
+      proofs: proofs,
+      addProof: function () {
+        var next = PROOFS.find(function (p) { return !shown[p.id]; });
+        if (next) { var n = Object.assign({}, shown); n[next.id] = true; self.setState({ shown: n }); }
+      },
+      prs: PRS.map(function (p) {
+        var r = RISK[p.risk];
+        var gh = p.prov === 'GitHub';
+        return {
+          prov: p.prov, num: p.num, title: p.title, meta: p.meta, agent: p.agent, riskLabel: r.label + ' risk',
+          rowStyle: 'display:flex;flex-direction:column;gap:3px;width:100%;min-height:44px;padding:10px 18px;border:0;text-align:left;cursor:pointer;background:' + (p.on ? '#2C3647' : 'transparent'),
+          provStyle: 'padding:0 6px;border-radius:4px;font-weight:600;color:' + (gh ? '#C9DCFF' : '#F7CD8A') + ';background:' + (gh ? 'rgba(110,168,255,0.15)' : 'rgba(242,182,97,0.15)'),
+          dotStyle: 'margin-left:auto;width:8px;height:8px;border-radius:50%;background:' + r.dot
+        };
+      }),
+      lanes: LANES.map(function (l) {
+        return {
+          label: l.label, path: l.path, add: l.add, del: l.del, owner: l.owner,
+          progress: l.done + ' of ' + l.files.length + ' reviewed',
+          barStyle: 'height:100%;border-radius:999px;background:' + l.color + ';width:' + Math.round(l.done / l.files.length * 100) + '%',
+          dotStyle: 'width:10px;height:10px;border-radius:3px;background:' + l.color,
+          files: l.files.map(function (f) { var c = CATS[f.cat]; return { name: f.name, why: f.why, cat: c.label, catStyle: 'font-weight:600;color:' + c.color, risk: RISK[f.risk].label, pillStyle: pill(RISK[f.risk]) }; })
+        };
+      }),
+      threads: THREADS.map(function (t) {
+        var needs = t.state === 'Needs you';
+        return Object.assign({}, t, {
+          avatarStyle: 'width:32px;height:32px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:11.5px;font-weight:700;color:#17181C;background:' + t.color,
+          statePill: pill(needs ? RISK.medium : { fg: '#C9DCFF', bg: 'rgba(110,168,255,0.15)' }),
+          sugDel: t.sugDel || '', sugAdd: t.sugAdd || ''
+        });
+      }),
+      contracts: CONTRACTS.map(function (c) { return { name: c.name, flow: c.flow, status: c.status, pillStyle: pill(RISK[c.risk]) }; }),
+      drafts: DRAFTS
+    };
+  }
+}
+</script>
+</body>
+</html>

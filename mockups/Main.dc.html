@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Change Review – local changes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#16171B}
+a{color:#8FBCFF}a:hover{color:#B9D5FF}
+button{font-family:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</helmet>
+<div style="min-height: 1240px; display: flex; flex-direction: column; background: #1E1F24; color: #D7DAE0; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.45">
+
+<header style="height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px; background: #18191D; border-bottom: 1px solid #2E3138; color: #9BA1AC; font-size: 12px">
+<span>orders-monorepo</span>
+<span aria-hidden="true">·</span>
+<span style="color: #D7DAE0">Change Review</span>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Activity bar" style="width: 52px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; background: #18191D; border-right: 1px solid #2E3138">
+<button aria-label="Explorer" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+</button>
+<button aria-label="Search" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+</button>
+<button aria-label="Source control" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"></circle><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="7" r="2.5"></circle><path d="M6 7.5v9"></path><path d="M18 9.5c0 5-7 4-11.5 7.5"></path></svg>
+</button>
+<button aria-label="Change Review" aria-current="true" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: #2C3647; color: #FFFFFF; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h12"></path><path d="M4 10h7"></path><path d="M4 15h5"></path><circle cx="16" cy="15" r="4"></circle><path d="m19 18 2.5 2.5"></path></svg>
+</button>
+<button aria-label="Extensions" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"></rect><rect x="4" y="13" width="7" height="7" rx="1"></rect><rect x="13" y="13" width="7" height="7" rx="1"></rect><path d="M14 7.5h6M17 4.5v6"></path></svg>
+</button>
+</nav>
+
+<aside aria-label="Change Review" style="flex: 0 1 340px; min-width: 280px; display: flex; flex-direction: column; background: #22242A; border-right: 1px solid #2E3138">
+
+<div style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 18px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #9BA1AC">CHANGE REVIEW</span>
+<div style="display: flex; gap: 2px">
+<button onClick="{{runAi}}" aria-label="Run AI review" title="Run AI review" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 6px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"></path><path d="M20 4v7h-7"></path></svg>
+</button>
+<a href="Settings.dc.html" aria-label="AI backend and trigger settings" title="AI backend and trigger settings" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: #9BA1AC">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"></path></svg>
+</a>
+</div>
+</div>
+
+<div style="display: flex; gap: 4px; padding: 0 12px 12px">
+<button aria-current="page" style="flex: 1; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 8px; background: #2C3647; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Local changes <span style="padding: 1px 7px; border-radius: 999px; background: #3B4D6B; font-size: 11px">6</span></button>
+<a href="PRs.dc.html" style="flex: 1; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 8px; color: #C3C8D0; font-size: 13px; font-weight: 500; text-decoration: none">Pull requests <span style="padding: 1px 7px; border-radius: 999px; background: #33363D; font-size: 11px; color: #C3C8D0">4</span></a>
+</div>
+
+<section style="margin: 0 12px 14px; padding: 14px; border: 1px solid #33363D; border-radius: 10px; background: #1E1F24">
+<div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"></path><circle cx="12" cy="12" r="4"></circle></svg>
+UNSTAGED · AGENT SESSION
+</div>
+<p style="margin: 8px 0 0; font-size: 13.5px; color: #EEF0F3">Adds order cancellation end to end: a shared status, an API route that refunds, a migration, and a Cancel button in the app.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-size: 12px; color: #9BA1AC">
+<span>6 files</span>
+<span style="font-family: 'JetBrains Mono', monospace; color: #7FD1A0">{{totalAdd}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; color: #FF9E96">{{totalDel}}</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #FF8A80"></span>2 high</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #F2B661"></span>2 medium</span>
+<span style="display: inline-flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #7FD1A0"></span>2 low</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px">
+<sc-for list="{{catSummary}}" as="cs" hint-placeholder-count="6">
+<span style="{{cs.style}}">{{cs.label}} {{cs.count}}</span>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #2E3138">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #C3C8D0">
+<span style="{{ai.dotStyle}}"></span>
+<span>{{ai.status}}</span>
+</div>
+<button onClick="{{runAi}}" style="{{ai.btnStyle}}">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+{{ai.btnLabel}}
+</button>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11.5px; color: #9BA1AC">
+<span>{{ai.hint}}</span>
+<a href="Settings.dc.html" style="flex-shrink: 0">via Cursor agent</a>
+</div>
+</div>
+</section>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 12px 10px">
+<span style="font-size: 12px; color: #9BA1AC">Group by</span>
+<div role="group" aria-label="Group files by" style="flex: 1; display: flex; gap: 2px; padding: 3px; border: 1px solid #33363D; border-radius: 9px; background: #1A1B20">
+<button onClick="{{byArea}}" aria-pressed="{{areaPressed}}" style="{{areaTabStyle}}">Area</button>
+<button onClick="{{byType}}" aria-pressed="{{typePressed}}" style="{{typeTabStyle}}">Change type</button>
+</div>
+</div>
+
+<div role="group" aria-label="Filter by area" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 10px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+<button onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}} <span style="opacity: 0.75">{{f.count}}</span></button>
+</sc-for>
+</div>
+
+<div style="flex: 1; display: flex; flex-direction: column; padding-bottom: 8px">
+<sc-for list="{{groups}}" as="group" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column">
+<div style="display: flex; align-items: center; gap: 8px; padding: 10px 18px 6px">
+<span style="{{group.dotStyle}}"></span>
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #EEF0F3">{{group.label}}</span>
+<span style="font-size: 12px; color: #9BA1AC">{{group.note}}</span>
+<span style="margin-left: auto; font-size: 11px; color: #9BA1AC">{{group.count}}</span>
+</div>
+<sc-for list="{{group.files}}" as="file" hint-placeholder-count="2">
+<div style="{{file.wrapStyle}}">
+<label style="width: 40px; height: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: flex-end; cursor: pointer">
+<input type="checkbox" checked="{{file.approved}}" onChange="{{file.toggle}}" aria-label="{{file.approveAria}}" style="width: 16px; height: 16px; margin: 0; accent-color: #5BC08A; cursor: pointer">
+</label>
+<button onClick="{{file.pick}}" style="{{file.rowStyle}}">
+<span style="{{file.statusStyle}}">{{file.status}}</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+<span style="font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{file.name}}</span>
+<span style="font-size: 11.5px; color: #9BA1AC; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"><span style="{{file.tagStyle}}">{{file.tag}}</span> · {{file.dir}}</span>
+</span>
+<sc-if value="{{file.needsChanges}}" hint-placeholder-val="{{ false }}">
+<span style="flex-shrink: 0; padding: 0 6px; border-radius: 4px; background: rgba(242,182,97,0.16); color: #F7CD8A; font-size: 10.5px; font-weight: 700">CHANGES</span>
+</sc-if>
+<sc-if value="{{file.stale}}" hint-placeholder-val="{{ false }}">
+<span title="Changed since the last AI review" style="flex-shrink: 0; padding: 0 6px; border-radius: 4px; background: rgba(110,168,255,0.16); color: #C9DCFF; font-size: 10.5px; font-weight: 700">STALE</span>
+</sc-if>
+<span title="{{file.riskLabel}}" style="{{file.dotStyle}}"></span>
+<span class="sr">{{file.riskLabel}}</span>
+<span style="width: 70px; flex-shrink: 0; text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px"><span style="color: #7FD1A0">{{file.add}}</span> <span style="color: #FF9E96">{{file.del}}</span></span>
+</button>
+</div>
+</sc-for>
+<sc-if value="{{group.hasWarn}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; margin: 2px 14px 8px 22px; padding: 9px 11px; border: 1px solid #5A4630; border-radius: 8px; background: #2A2620; color: #F7CD8A; font-size: 12.5px; line-height: 1.45">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M12 3 2.5 20h19z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+<span>{{group.warn}}</span>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<sc-if value="{{hasUntouched}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 10px 18px 4px; font-size: 12px; color: #9BA1AC">No changes in: <span style="color: #C3C8D0">{{untouched}}</span></div>
+</sc-if>
+</div>
+
+<div style="padding: 14px 18px 16px; border-top: 1px solid #2E3138">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #9BA1AC">
+<span>Approved</span>
+<span style="color: #D7DAE0">{{approvedCount}} of 6 files · {{changesCount}} need changes</span>
+</div>
+<div style="height: 6px; margin-top: 8px; border-radius: 999px; background: #33363D">
+<div style="{{progressStyle}}"></div>
+</div>
+<button onClick="{{approveLowRisk}}" style="width: 100%; margin-top: 12px; min-height: 36px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 600; cursor: pointer">Approve remaining low-risk files</button>
+<button style="width: 100%; margin-top: 8px; min-height: 36px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed #4A4E58; border-radius: 8px; background: transparent; color: #C3C8D0; font-size: 12.5px; font-weight: 600; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="m16 10 5-3v10l-5-3"></path></svg>
+Attach proof for reviewers (optional)
+</button>
+</div>
+
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; background: #1E1F24">
+
+<div style="height: 38px; flex-shrink: 0; display: flex; align-items: stretch; background: #18191D; border-bottom: 1px solid #2E3138">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #1E1F24; border-right: 1px solid #2E3138; color: #EEF0F3; font-size: 12.5px">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8FBCFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h12M4 10h7M4 15h5"></path><circle cx="16" cy="15" r="4"></circle></svg>
+Review: {{sel.name}}
+</div>
+<div style="display: flex; align-items: center; padding: 0 16px; color: #9BA1AC; font-size: 12.5px">{{sel.name}} (diff)</div>
+</div>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; padding: 24px">
+
+<div style="flex: 999 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: #9BA1AC">
+<span style="{{sel.areaStyle}}">{{sel.areaLabel}}</span>
+<span style="{{sel.catStyle}}">{{sel.catLabel}}</span>
+<span style="font-family: 'JetBrains Mono', monospace">{{sel.dir}}/</span>
+</div>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; color: #FFFFFF; font-family: 'JetBrains Mono', monospace">{{sel.name}}</h1>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 14px; font-size: 13px">
+<span style="{{sel.statusStyle}}">{{sel.statusLabel}}</span>
+<span style="font-family: 'JetBrains Mono', monospace"><span style="color: #7FD1A0">{{sel.add}}</span> <span style="color: #FF9E96">{{sel.del}}</span></span>
+<span style="{{sel.riskStyle}}">{{sel.riskLabel}}</span>
+<sc-if value="{{sel.edited}}" hint-placeholder-val="{{ false }}">
+<span style="display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px; background: rgba(76,141,255,0.16); color: #C9DCFF; font-size: 11.5px; font-weight: 600">Edited by you</span>
+</sc-if>
+<span style="color: #9BA1AC">{{sel.aiText}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px">
+<button onClick="{{sel.approve}}" aria-pressed="{{sel.approvedPressed}}" style="{{sel.approveStyle}}">{{sel.approveLabel}}</button>
+<button onClick="{{sel.requestChanges}}" aria-pressed="{{sel.changesPressed}}" style="{{sel.changesStyle}}">{{sel.changesLabel}}</button>
+<button style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Open side-by-side diff</button>
+<button style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Ask about this change</button>
+</div>
+</div>
+
+<sc-if value="{{sel.stale}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border: 1px solid #3A4A66; border-radius: 10px; background: rgba(76,141,255,0.08)">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8FBCFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"></path><path d="M20 4v7h-7"></path></svg>
+<span style="flex: 1; min-width: 240px; font-size: 13.5px; color: #E4E6EA">This file changed after the last AI review, so the explanation below may be out of date.</span>
+<button onClick="{{runAi}}" style="min-height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 12.5px; font-weight: 600; cursor: pointer">Re-run AI on changed files</button>
+</div>
+</sc-if>
+
+<section style="padding: 18px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 1-1 1.7M12 17h.01"></path></svg>
+WHY IT CHANGED
+</h2>
+<p style="margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: #EEF0F3">{{sel.why}}</p>
+<p style="margin: 10px 0 0; font-size: 12px; color: #9BA1AC">Inferred from: the agent’s task prompt, the diff, and how this file is used across the repo.</p>
+</section>
+
+<section style="padding: 18px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"></path></svg>
+WHAT CHANGED
+</h2>
+<ul style="margin: 10px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: #D7DAE0">
+<sc-for list="{{sel.changes}}" as="c" hint-placeholder-count="3">
+<li>{{c.text}}</li>
+</sc-for>
+</ul>
+</section>
+
+<section style="padding: 18px 20px 6px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0 0 6px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2.5 20h19z"></path><path d="M12 10v4M12 17h.01"></path></svg>
+POSSIBLE IMPACT
+</h2>
+<sc-for list="{{sel.impacts}}" as="imp" hint-placeholder-count="2">
+<div style="display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid #33363D">
+<span style="{{imp.pillStyle}}">{{imp.levelLabel}}</span>
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #9BA1AC">{{imp.kind}}</div>
+<div style="margin-top: 3px; font-size: 14px; line-height: 1.5; color: #E4E6EA">{{imp.text}}</div>
+</div>
+</div>
+</sc-for>
+</section>
+
+<section style="padding: 18px 20px 20px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px">
+<h2 style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"></path></svg>
+KEY LINES
+</h2>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="font-size: 12px; color: #9BA1AC">the parts worth reading, not the whole diff</span>
+<sc-if value="{{sel.notEditing}}" hint-placeholder-val="{{ true }}">
+<button onClick="{{sel.startEdit}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 600; cursor: pointer">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="m13.5 6.5 4 4"></path></svg>
+Edit code
+</button>
+</sc-if>
+</div>
+</div>
+<sc-if value="{{sel.notEditing}}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{sel.edited}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 8px 12px; border: 1px solid #3A4A66; border-radius: 8px; background: rgba(76,141,255,0.08); font-size: 12.5px; color: #C9DCFF">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg>
+Showing your edited version. Saved to the working file; approval cleared and the file is marked for the next AI run.
+</div>
+</sc-if>
+<div style="overflow-x: auto; border: 1px solid #2E3138; border-radius: 8px; background: #17181C; padding: 8px 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.75">
+<sc-for list="{{sel.diff}}" as="ln" hint-placeholder-count="5">
+<div style="{{ln.style}}">
+<span style="width: 44px; flex-shrink: 0; padding-right: 12px; text-align: right; color: #8A909B">{{ln.n}}</span>
+<span style="{{ln.signStyle}}">{{ln.sign}}</span>
+<span style="white-space: pre; padding-right: 20px; color: #E4E6EA">{{ln.code}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{sel.editing}}" hint-placeholder-val="{{ false }}">
+<label style="display: flex; flex-direction: column; gap: 8px">
+<span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: #9BA1AC">
+<span style="padding: 1px 8px; border-radius: 6px; background: rgba(76,141,255,0.16); color: #C9DCFF; font-weight: 600">Editing</span>
+<span style="font-family: 'JetBrains Mono', monospace">{{sel.editPath}}</span>
+</span>
+<textarea value="{{sel.draft}}" onChange="{{sel.onDraft}}" rows="10" spellcheck="false" style="width: 100%; box-sizing: border-box; resize: vertical; padding: 12px 14px; border: 1px solid #4C8DFF; border-radius: 8px; background: #17181C; color: #E4E6EA; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12.5px; line-height: 1.75; white-space: pre; outline: none"></textarea>
+</label>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px">
+<button onClick="{{sel.saveEdit}}" style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Save to file</button>
+<button onClick="{{sel.cancelEdit}}" style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Cancel</button>
+<button style="min-height: 36px; padding: 0 14px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 13px; font-weight: 500; cursor: pointer">Open full file in editor</button>
+<span style="font-size: 12px; color: #9BA1AC">Saving writes to your working copy, clears the file’s approval and marks it for the next AI run.</span>
+</div>
+</sc-if>
+</section>
+
+</div>
+
+<div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<section style="padding: 16px 18px; border: 1px solid #5A4630; border-radius: 10px; background: #2A2620">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #F7CD8A">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10H7z"></path><path d="M3 12h4M17 12h4"></path></svg>
+CROSS-AREA ALERT
+</div>
+<p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.5; color: #EEF0F3">Shared contract changed: <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px">OrderStatus</span> now includes <span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px">'cancelled'</span>. 4 switch statements weren’t updated — 2 in mobile, 2 in backend.</p>
+<button style="margin-top: 10px; min-height: 32px; padding: 0 12px; border: 1px solid #6B5537; border-radius: 8px; background: transparent; color: #F7CD8A; font-size: 12.5px; font-weight: 600; cursor: pointer">Show all 4 usages</button>
+</section>
+
+<section style="padding: 16px 18px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">BLAST RADIUS</h2>
+<span style="font-size: 12px; color: #9BA1AC">{{sel.callerCount}} dependents</span>
+</div>
+<p style="margin: 6px 0 4px; font-size: 12.5px; color: #9BA1AC">Code that imports or calls what changed here.</p>
+<sc-for list="{{sel.callers}}" as="cl" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-top: 1px solid #33363D">
+<span style="{{cl.style}}">{{cl.area}}</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #D7DAE0; word-break: break-all">{{cl.path}}</span>
+</div>
+</sc-for>
+</section>
+
+<section style="padding: 16px 18px; border: 1px solid #2E3138; border-radius: 10px; background: #24262C">
+<h2 style="margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">BEFORE YOU APPROVE</h2>
+<sc-for list="{{sel.checks}}" as="chk" hint-placeholder-count="2">
+<label style="display: flex; align-items: flex-start; gap: 10px; min-height: 36px; padding: 6px 0; font-size: 13.5px; color: #E4E6EA; cursor: pointer">
+<input type="checkbox" style="width: 16px; height: 16px; margin: 2px 0 0; accent-color: #4C8DFF">
+<span>{{chk.text}}</span>
+</label>
+</sc-for>
+</section>
+
+</div>
+
+</div>
+</main>
+
+</div>
+
+<footer style="height: 26px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px; background: #1F3A63; color: #E6ECF5; font-size: 12px">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="display: inline-flex; align-items: center; gap: 6px">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"></circle><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="7" r="2.5"></circle><path d="M6 7.5v9M18 9.5c0 5-7 4-11.5 7.5"></path></svg>
+feat/cancel-orders
+</span>
+<span>6 unstaged changes</span>
+</div>
+<span>Change Review · {{approvedCount}}/6 approved</span>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+var AREAS = [
+  { id: 'shared', label: 'Shared', note: 'used by mobile + backend', color: '#B79CFF', tint: 'rgba(183,156,255,0.15)' },
+  { id: 'backend', label: 'Backend', note: 'services/api', color: '#8FBCFF', tint: 'rgba(110,168,255,0.15)' },
+  { id: 'mobile', label: 'Mobile', note: 'apps/mobile', color: '#6FD6C6', tint: 'rgba(79,193,176,0.15)' }
+];
+var RISK = {
+  high: { label: 'High risk', short: 'High', fg: '#FFB4AC', bg: 'rgba(255,138,128,0.16)', dot: '#FF8A80' },
+  medium: { label: 'Medium risk', short: 'Medium', fg: '#F7CD8A', bg: 'rgba(242,182,97,0.16)', dot: '#F2B661' },
+  low: { label: 'Low risk', short: 'Low', fg: '#9FE0B8', bg: 'rgba(127,209,160,0.14)', dot: '#7FD1A0' }
+};
+var STATUS = {
+  M: { label: 'Modified', color: '#E6C07B' },
+  A: { label: 'Added', color: '#7FD1A0' },
+  D: { label: 'Deleted', color: '#FF9E96' }
+};
+var CATS = [
+  { id: 'ui', label: 'UI', color: '#F7A8D0' },
+  { id: 'logic', label: 'Business logic', color: '#FFD580' },
+  { id: 'api', label: 'API & networking', color: '#8FBCFF' },
+  { id: 'contract', label: 'Shared types', color: '#CDB9FF' },
+  { id: 'data', label: 'Database', color: '#7FDBD0' },
+  { id: 'test', label: 'Unit tests', color: '#9FE0B8', warn: 'No tests added. refund.service.ts and cancel.controller.ts change behaviour with no test covering them.' },
+  { id: 'infra', label: 'Infra', color: '#C3C8D0' },
+  { id: 'ci', label: 'CI/CD', color: '#C3C8D0' },
+  { id: 'automation', label: 'Automation', color: '#C3C8D0' }
+];
+var FILES = [
+  {
+    id: 'shared-types', area: 'shared', cat: 'contract', dir: 'packages/shared/types', name: 'order.ts', status: 'M', add: 4, del: 1, risk: 'high',
+    why: 'Cancelling needs a new order state that the API and the app both understand, so the agent added “cancelled” to the shared OrderStatus type.',
+    changes: ['Added \'cancelled\' to the OrderStatus union', 'Added an optional cancelledAt field to the Order interface'],
+    impacts: [
+      { kind: 'Contract', level: 'high', text: '4 switch statements on OrderStatus were not updated — 2 in mobile, 2 in backend. They will silently fall through to their default branch.' },
+      { kind: 'Mobile', level: 'medium', text: 'Older app versions already installed will receive “cancelled” from the API and show it as an unknown status.' },
+      { kind: 'Backend', level: 'low', text: 'JSON serialisers pass the new value through unchanged.' }
+    ],
+    diff: [
+      { t: 'ctx', n: '8', c: 'export type OrderStatus =' },
+      { t: 'ctx', n: '9', c: "  | 'pending'" },
+      { t: 'ctx', n: '10', c: "  | 'paid'" },
+      { t: 'del', n: '11', c: "  | 'shipped';" },
+      { t: 'add', n: '11', c: "  | 'shipped'" },
+      { t: 'add', n: '12', c: "  | 'cancelled';" },
+      { t: 'ctx', n: '', c: '  …' },
+      { t: 'add', n: '18', c: '  cancelledAt?: string;' }
+    ],
+    callers: [
+      { area: 'mobile', path: 'apps/mobile/src/components/StatusBadge.tsx' },
+      { area: 'mobile', path: 'apps/mobile/src/screens/OrderList.tsx' },
+      { area: 'backend', path: 'services/api/src/orders/order.mapper.ts' },
+      { area: 'backend', path: 'services/api/src/emails/statusEmail.ts' }
+    ],
+    checks: ['Every switch on OrderStatus handles \'cancelled\'', 'Older app versions degrade gracefully']
+  },
+  {
+    id: 'refund', area: 'backend', cat: 'logic', dir: 'services/api/src/payments', name: 'refund.service.ts', status: 'M', add: 41, del: 12, risk: 'high',
+    why: 'Cancelling a paid order has to return the money. The existing refund() only did full refunds, so the agent made the amount optional to allow partial refunds.',
+    changes: ['refund(orderId) became refund(orderId, amount?)', 'Added an idempotency key built from orderId and amount', 'Payment-provider errors are now caught and re-thrown as RefundFailedError'],
+    impacts: [
+      { kind: 'Behaviour', level: 'high', text: 'admin/refunds.ts and webhooks/payments.ts catch the provider’s raw error. They now receive RefundFailedError, so their catch blocks no longer match.' },
+      { kind: 'Data', level: 'medium', text: 'The idempotency key format changed, so a refund retried across the deploy will not be de-duplicated.' }
+    ],
+    diff: [
+      { t: 'ctx', n: '22', c: 'export async function refund(' },
+      { t: 'del', n: '23', c: '  orderId: string' },
+      { t: 'add', n: '23', c: '  orderId: string,' },
+      { t: 'add', n: '24', c: '  amount?: Money' },
+      { t: 'ctx', n: '25', c: ') {' },
+      { t: 'add', n: '26', c: "  const key = `refund:${orderId}:${amount ?? 'full'}`;" },
+      { t: 'ctx', n: '27', c: '  try {' },
+      { t: 'add', n: '28', c: '    return await provider.refund({ orderId, amount, key });' },
+      { t: 'add', n: '29', c: '  } catch (e) { throw new RefundFailedError(e); }' }
+    ],
+    callers: [
+      { area: 'backend', path: 'services/api/src/orders/cancel.controller.ts' },
+      { area: 'backend', path: 'services/api/src/admin/refunds.ts' },
+      { area: 'backend', path: 'services/api/src/webhooks/payments.ts' }
+    ],
+    checks: ['Catch blocks in admin/refunds.ts and webhooks/payments.ts updated', 'Idempotency key change is safe during deploy']
+  },
+  {
+    id: 'cancel', area: 'backend', cat: 'api', dir: 'services/api/src/orders', name: 'cancel.controller.ts', status: 'A', add: 84, del: 0, risk: 'medium',
+    why: 'There was no way for the app to cancel an order, so the agent created a new endpoint for it.',
+    changes: ['New route POST /orders/:id/cancel', 'Only the order’s owner can cancel, and only pending or paid orders', 'Calls refund() when the order was already paid'],
+    impacts: [
+      { kind: 'Security', level: 'medium', text: 'The route requires login, but it is not behind the rate limiter that the other order routes use.' },
+      { kind: 'API', level: 'low', text: 'Additive change — no existing client breaks.' }
+    ],
+    diff: [
+      { t: 'add', n: '1', c: "router.post('/orders/:id/cancel', requireAuth, async (req, res) => {" },
+      { t: 'add', n: '2', c: '  const order = await orders.findOwned(req.params.id, req.user.id);' },
+      { t: 'add', n: '3', c: '  if (!canCancel(order)) return res.status(409).end();' },
+      { t: 'add', n: '4', c: "  if (order.status === 'paid') await refund(order.id);" }
+    ],
+    callers: [
+      { area: 'mobile', path: 'apps/mobile/src/api/orders.ts' }
+    ],
+    checks: ['Add the orders rate limiter', 'Test: cancelling someone else’s order returns 404']
+  },
+  {
+    id: 'migration', area: 'backend', cat: 'data', dir: 'services/api/migrations', name: '20261125_add_cancelled_at.sql', status: 'A', add: 6, del: 0, risk: 'medium',
+    why: 'Stores when an order was cancelled, which the new cancelledAt field needs.',
+    changes: ['Adds a nullable cancelled_at column to orders', 'Adds an index on (status, cancelled_at)'],
+    impacts: [
+      { kind: 'Database', level: 'medium', text: 'The index is created without CONCURRENTLY, which blocks writes to orders while it builds.' },
+      { kind: 'Deploy', level: 'low', text: 'Must run before the API deploys, or the cancel route will fail when it writes.' }
+    ],
+    diff: [
+      { t: 'add', n: '1', c: 'ALTER TABLE orders ADD COLUMN cancelled_at timestamptz;' },
+      { t: 'add', n: '2', c: 'CREATE INDEX orders_status_cancelled_idx' },
+      { t: 'add', n: '3', c: '  ON orders (status, cancelled_at);' }
+    ],
+    callers: [
+      { area: 'backend', path: 'services/api/src/orders/order.repo.ts' }
+    ],
+    checks: ['Use CREATE INDEX CONCURRENTLY', 'Migration runs before the API deploy']
+  },
+  {
+    id: 'order-detail', area: 'mobile', cat: 'ui', dir: 'apps/mobile/src/screens', name: 'OrderDetail.tsx', status: 'M', add: 58, del: 9, risk: 'low',
+    why: 'Gives people a Cancel order button on the order screen, with a confirmation sheet that explains the refund.',
+    changes: ['Cancel button shown for pending and paid orders', 'Confirmation bottom sheet explains what will be refunded', 'Status updates optimistically and rolls back on error'],
+    impacts: [
+      { kind: 'UX', level: 'low', text: 'OrderDetail also opens from the push-notification deep link, so the button appears there too.' },
+      { kind: 'Release', level: 'low', text: 'No new native modules, so no app-store release is needed for this change.' }
+    ],
+    diff: [
+      { t: 'ctx', n: '110', c: '<OrderSummary order={order} />' },
+      { t: 'add', n: '111', c: '{canCancel(order) && (' },
+      { t: 'add', n: '112', c: '  <Button variant="danger" onPress={openSheet}>' },
+      { t: 'add', n: '113', c: '    Cancel order' },
+      { t: 'add', n: '114', c: '  </Button>' },
+      { t: 'add', n: '115', c: ')}' }
+    ],
+    callers: [
+      { area: 'mobile', path: 'apps/mobile/src/navigation/deepLinks.ts' },
+      { area: 'mobile', path: 'apps/mobile/src/navigation/OrdersStack.tsx' }
+    ],
+    checks: ['Check the deep-link entry point', 'Error state when the refund fails']
+  },
+  {
+    id: 'mobile-api', area: 'mobile', cat: 'api', dir: 'apps/mobile/src/api', name: 'orders.ts', status: 'M', add: 17, del: 1, risk: 'low',
+    why: 'Adds the API call that the new Cancel button uses.',
+    changes: ['New cancelOrder(id) that calls POST /orders/:id/cancel', 'Maps a 409 response to a friendly “can no longer be cancelled” error'],
+    impacts: [
+      { kind: 'API', level: 'low', text: 'Path and status codes match the new backend route.' }
+    ],
+    diff: [
+      { t: 'add', n: '41', c: 'export const cancelOrder = (id: string) =>' },
+      { t: 'add', n: '42', c: '  http.post(`/orders/${id}/cancel`);' }
+    ],
+    callers: [
+      { area: 'mobile', path: 'apps/mobile/src/screens/OrderDetail.tsx' }
+    ],
+    checks: ['Retry policy can’t cancel twice']
+  }
+];
+
+function pill(r) {
+  return 'display:inline-flex;align-items:center;justify-content:center;height:22px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;color:' + r.fg + ';background:' + r.bg;
+}
+function areaTag(a) {
+  return 'display:inline-flex;align-self:flex-start;align-items:center;height:20px;padding:0 8px;border-radius:6px;font-size:11px;font-weight:600;color:' + a.color + ';background:' + a.tint;
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    var s = this.state || {};
+    var selected = s.selected ?? 'shared-types';
+    var filter = s.filter ?? 'all';
+    var groupBy = s.groupBy ?? 'area';
+    var decisions = s.decisions ?? { 'mobile-api': 'approved', 'migration': 'changes' };
+    var editingId = s.editingId ?? null;
+    var drafts = s.drafts ?? {};
+    var edited = s.edited ?? {};
+    var staleMap = s.stale ?? { 'order-detail': true };
+    var running = !!s.running;
+    var staleCount = Object.keys(staleMap).length;
+    function runAi() {
+      if (running) { return; }
+      self.setState({ running: true });
+      setTimeout(function () { self.setState({ running: false, stale: {} }); }, 1600);
+    }
+    var self = this;
+    var areaById = {};
+    AREAS.forEach(function (a) { areaById[a.id] = a; });
+    var catById = {};
+    CATS.forEach(function (c) { catById[c.id] = c; });
+
+    function setDecision(id, value) {
+      var next = Object.assign({}, decisions);
+      if (next[id] === value) { delete next[id]; } else { next[id] = value; }
+      self.setState({ decisions: next });
+    }
+    function catTag(c) {
+      return 'display:inline-flex;align-self:flex-start;align-items:center;height:20px;padding:0 8px;border-radius:6px;font-size:11px;font-weight:600;background:#2E3138;color:' + c.color;
+    }
+    function segStyle(on) {
+      return 'flex:1;min-height:30px;border:0;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer;background:' + (on ? '#2C3647' : 'transparent') + ';color:' + (on ? '#FFFFFF' : '#C3C8D0');
+    }
+
+    var filters = [{ id: 'all', label: 'All' }].concat(AREAS.map(function (a) { return { id: a.id, label: a.label }; })).map(function (f) {
+      var on = f.id === filter;
+      return {
+        label: f.label,
+        count: f.id === 'all' ? FILES.length : FILES.filter(function (x) { return x.area === f.id; }).length,
+        pressed: on ? 'true' : 'false',
+        pick: function () { self.setState({ filter: f.id }); },
+        style: 'display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid ' + (on ? '#4C8DFF' : '#3A3D45') + ';background:' + (on ? 'rgba(76,141,255,0.18)' : 'transparent') + ';color:' + (on ? '#FFFFFF' : '#C3C8D0')
+      };
+    });
+
+    var visible = FILES.filter(function (f) { return filter === 'all' || f.area === filter; });
+
+    function fileRow(f) {
+      var on = f.id === selected;
+      var r = RISK[f.risk];
+      var st = STATUS[f.status];
+      var d = decisions[f.id];
+      var other = groupBy === 'area' ? catById[f.cat] : areaById[f.area];
+      return {
+        name: f.name, dir: f.dir, status: f.status,
+        add: '+' + f.add, del: '−' + f.del,
+        approved: d === 'approved',
+        needsChanges: d === 'changes',
+        stale: !!staleMap[f.id],
+        approveAria: 'Approve ' + f.name,
+        toggle: function () { setDecision(f.id, 'approved'); },
+        tag: other.label,
+        tagStyle: 'font-weight:600;color:' + other.color,
+        riskLabel: r.label,
+        pick: function () { self.setState({ selected: f.id }); },
+        wrapStyle: 'display:flex;align-items:stretch;background:' + (on ? '#2C3647' : 'transparent'),
+        rowStyle: 'flex:1;min-width:0;display:flex;align-items:center;gap:10px;min-height:46px;padding:6px 14px 6px 10px;border:0;text-align:left;cursor:pointer;color:#D7DAE0;font-size:13px;background:transparent',
+        statusStyle: 'width:14px;flex-shrink:0;font-family:JetBrains Mono, monospace;font-size:12px;font-weight:600;color:' + st.color,
+        dotStyle: 'width:8px;height:8px;border-radius:50%;flex-shrink:0;background:' + r.dot
+      };
+    }
+
+    var groups = [];
+    var untouched = [];
+    if (groupBy === 'area') {
+      groups = AREAS.filter(function (a) { return filter === 'all' || a.id === filter; }).map(function (a) {
+        var files = visible.filter(function (f) { return f.area === a.id; }).map(fileRow);
+        return { label: a.label, note: a.note, count: files.length, files: files, hasWarn: false, warn: '', dotStyle: 'width:9px;height:9px;border-radius:3px;background:' + a.color };
+      });
+    } else {
+      CATS.forEach(function (c) {
+        var files = visible.filter(function (f) { return f.cat === c.id; }).map(fileRow);
+        if (files.length || c.warn) {
+          groups.push({ label: c.label, note: files.length ? '' : 'none added', count: files.length, files: files, hasWarn: !files.length && !!c.warn, warn: c.warn || '', dotStyle: 'width:9px;height:9px;border-radius:3px;background:' + c.color });
+        } else {
+          untouched.push(c.label);
+        }
+      });
+    }
+
+    var catSummary = CATS.map(function (c) {
+      var n = FILES.filter(function (f) { return f.cat === c.id; }).length;
+      return { c: c, n: n };
+    }).filter(function (x) { return x.n > 0 || x.c.id === 'test'; }).map(function (x) {
+      var missing = x.n === 0;
+      return { label: x.c.label, count: x.n, style: 'display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:6px;font-size:11.5px;font-weight:600;background:' + (missing ? 'rgba(242,182,97,0.14)' : '#2A2D34') + ';color:' + (missing ? '#F7CD8A' : x.c.color) };
+    });
+
+    var f = FILES.find(function (x) { return x.id === selected; }) || FILES[0];
+    var a = areaById[f.area];
+    var cat = catById[f.cat];
+    var r = RISK[f.risk];
+    var st = STATUS[f.status];
+    var dec = decisions[f.id];
+    var isApproved = dec === 'approved';
+    var isChanges = dec === 'changes';
+    var currentCode = f.diff.filter(function (d) { return d.t !== 'del'; }).map(function (d) { return d.c; }).join('\n');
+    var draft = drafts[f.id] ?? currentCode;
+    var isEdited = !!edited[f.id];
+    var firstLine = parseInt((f.diff.find(function (d) { return d.n; }) || { n: '1' }).n, 10) || 1;
+    var shownDiff = isEdited
+      ? draft.split('\n').map(function (c, i) { return { t: 'edit', n: String(firstLine + i), c: c }; })
+      : f.diff;
+    var sel = {
+      name: f.name, dir: f.dir, why: f.why,
+      add: '+' + f.add, del: '−' + f.del,
+      statusLabel: st.label, statusStyle: 'font-weight:600;color:' + st.color,
+      riskLabel: r.label, riskStyle: pill(r),
+      areaLabel: a.label, areaStyle: areaTag(a),
+      catLabel: cat.label, catStyle: catTag(cat),
+      changes: f.changes.map(function (t) { return { text: t }; }),
+      checks: f.checks.map(function (t) { return { text: t }; }),
+      impacts: f.impacts.map(function (i) {
+        return { kind: i.kind, text: i.text, levelLabel: RISK[i.level].short, pillStyle: pill(RISK[i.level]) + ';width:76px;flex-shrink:0;margin-top:1px' };
+      }),
+      diff: shownDiff.map(function (d) {
+        var bg = d.t === 'add' ? 'rgba(127,209,160,0.11)' : d.t === 'del' ? 'rgba(255,138,128,0.11)' : d.t === 'edit' ? 'rgba(76,141,255,0.08)' : 'transparent';
+        var sc = d.t === 'add' ? '#7FD1A0' : d.t === 'del' ? '#FF9E96' : d.t === 'edit' ? '#8FBCFF' : '#8A909B';
+        return {
+          n: d.n, code: d.c,
+          sign: d.t === 'add' ? '+' : d.t === 'del' ? '−' : d.t === 'edit' ? '✎' : ' ',
+          style: 'display:flex;min-width:max-content;background:' + bg,
+          signStyle: 'width:20px;flex-shrink:0;color:' + sc
+        };
+      }),
+      callers: f.callers.map(function (c) { return { path: c.path, area: areaById[c.area].label, style: areaTag(areaById[c.area]) }; }),
+      callerCount: f.callers.length,
+      approveLabel: isApproved ? '✓ Approved' : 'Approve file',
+      approvedPressed: isApproved ? 'true' : 'false',
+      approveStyle: 'min-height:36px;padding:0 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid ' + (isApproved ? '#3F7A5A' : '#23774A') + ';background:' + (isApproved ? 'rgba(127,209,160,0.14)' : '#23774A') + ';color:' + (isApproved ? '#9FE0B8' : '#FFFFFF'),
+      approve: function () { setDecision(f.id, 'approved'); },
+      changesLabel: isChanges ? 'Changes requested' : 'Request changes',
+      changesPressed: isChanges ? 'true' : 'false',
+      changesStyle: 'min-height:36px;padding:0 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid ' + (isChanges ? '#6B5537' : '#3A3D45') + ';background:' + (isChanges ? 'rgba(242,182,97,0.14)' : 'transparent') + ';color:' + (isChanges ? '#F7CD8A' : '#D7DAE0'),
+      requestChanges: function () { setDecision(f.id, 'changes'); },
+      editing: editingId === f.id,
+      notEditing: editingId !== f.id,
+      edited: isEdited,
+      draft: draft,
+      editPath: f.dir + '/' + f.name,
+      stale: !!staleMap[f.id] && !running,
+      aiText: running ? 'AI review running…' : staleMap[f.id] ? 'Changed since the last AI review' : 'AI review up to date · saved result',
+      startEdit: function () { self.setState({ editingId: f.id }); },
+      onDraft: function (e) { var d = Object.assign({}, drafts); d[f.id] = e.target.value; self.setState({ drafts: d }); },
+      cancelEdit: function () {
+        var d = Object.assign({}, drafts);
+        if (!edited[f.id]) { delete d[f.id]; }
+        self.setState({ editingId: null, drafts: d });
+      },
+      saveEdit: function () {
+        var ed = Object.assign({}, edited); ed[f.id] = true;
+        var dec2 = Object.assign({}, decisions); delete dec2[f.id];
+        var st2 = Object.assign({}, staleMap); st2[f.id] = true;
+        self.setState({ editingId: null, edited: ed, decisions: dec2, stale: st2 });
+      }
+    };
+
+    var approvedCount = FILES.filter(function (x) { return decisions[x.id] === 'approved'; }).length;
+    var changesCount = FILES.filter(function (x) { return decisions[x.id] === 'changes'; }).length;
+    var totalAdd = FILES.reduce(function (n, x) { return n + x.add; }, 0);
+    var totalDel = FILES.reduce(function (n, x) { return n + x.del; }, 0);
+
+    var plural = staleCount > 1 ? 's' : '';
+    var ai = {
+      status: running ? 'Running AI review…' : staleCount ? 'Last AI review 12 min ago · ' + staleCount + ' file' + plural + ' changed since' : 'AI review up to date',
+      btnLabel: running ? 'Reviewing changed files…' : staleCount ? 'Run AI on ' + staleCount + ' changed file' + plural : 'Run AI review',
+      hint: running ? 'Sending changed sections only.' : staleCount ? 'Unchanged files use saved results.' : 'Nothing changed, so nothing to send.',
+      dotStyle: 'width:8px;height:8px;border-radius:50%;flex-shrink:0;background:' + (running ? '#8FBCFF' : staleCount ? '#F2B661' : '#7FD1A0'),
+      btnStyle: 'display:flex;align-items:center;justify-content:center;gap:8px;min-height:36px;border-radius:8px;font-size:13px;font-weight:600;cursor:' + (running ? 'progress' : 'pointer') + ';border:' + (staleCount && !running ? '0' : '1px solid #3A3D45') + ';background:' + (staleCount && !running ? '#3B6FD8' : 'transparent') + ';color:' + (staleCount && !running ? '#FFFFFF' : '#D7DAE0')
+    };
+
+    return {
+      ai: ai,
+      runAi: runAi,
+      filters: filters,
+      groups: groups,
+      hasUntouched: untouched.length > 0,
+      untouched: untouched.join(' · '),
+      catSummary: catSummary,
+      areaPressed: groupBy === 'area' ? 'true' : 'false',
+      typePressed: groupBy === 'type' ? 'true' : 'false',
+      areaTabStyle: segStyle(groupBy === 'area'),
+      typeTabStyle: segStyle(groupBy === 'type'),
+      byArea: function () { self.setState({ groupBy: 'area' }); },
+      byType: function () { self.setState({ groupBy: 'type' }); },
+      sel: sel,
+      approvedCount: approvedCount,
+      changesCount: changesCount,
+      approveLowRisk: function () {
+        var next = Object.assign({}, decisions);
+        FILES.forEach(function (x) { if (x.risk === 'low' && !next[x.id]) { next[x.id] = 'approved'; } });
+        self.setState({ decisions: next });
+      },
+      totalAdd: '+' + totalAdd,
+      totalDel: '−' + totalDel,
+      progressStyle: 'height:100%;border-radius:999px;background:#5BC08A;width:' + Math.round(approvedCount / FILES.length * 100) + '%'
+    };
+  }
+}
+</script>
+</body>
+</html>

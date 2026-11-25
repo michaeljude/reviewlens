@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Change Review – AI backend and triggers</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#16171B}
+a{color:#8FBCFF}a:hover{color:#B9D5FF}
+button,input,select{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1560px; display: flex; flex-direction: column; background: #1E1F24; color: #D7DAE0; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.45">
+
+<header style="height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px; background: #18191D; border-bottom: 1px solid #2E3138; color: #9BA1AC; font-size: 12px">
+<span>orders-monorepo</span>
+<span aria-hidden="true">·</span>
+<span style="color: #D7DAE0">Settings · Change Review</span>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Activity bar" style="width: 52px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; background: #18191D; border-right: 1px solid #2E3138">
+<a href="Main.dc.html" aria-label="Back to Change Review" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #9BA1AC">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h12"></path><path d="M4 10h7"></path><path d="M4 15h5"></path><circle cx="16" cy="15" r="4"></circle><path d="m19 18 2.5 2.5"></path></svg>
+</a>
+<span style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: #2C3647; color: #FFFFFF" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"></path></svg>
+</span>
+</nav>
+
+<aside aria-label="Settings sections" style="flex: 0 1 240px; min-width: 200px; display: flex; flex-direction: column; gap: 2px; padding: 20px 12px; background: #22242A; border-right: 1px solid #2E3138">
+<span style="padding: 0 10px 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #9BA1AC">CHANGE REVIEW</span>
+<a href="#backend" style="display: flex; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 6px; background: #2C3647; color: #FFFFFF; font-weight: 600; text-decoration: none">AI backend</a>
+<a href="#triggers" style="display: flex; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 6px; color: #C3C8D0; text-decoration: none">When AI runs</a>
+<a href="#tokens" style="display: flex; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 6px; color: #C3C8D0; text-decoration: none">Token saving</a>
+<a href="#mcp" style="display: flex; align-items: center; min-height: 36px; padding: 0 10px; border-radius: 6px; color: #C3C8D0; text-decoration: none">Chat tools (MCP)</a>
+<a href="Main.dc.html" style="margin-top: 16px; padding: 0 10px; font-size: 12.5px">← Back to Change Review</a>
+</aside>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 40px">
+<div style="max-width: 880px; display: flex; flex-direction: column; gap: 22px">
+
+<div>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #FFFFFF">AI backend and triggers</h1>
+<p style="margin: 6px 0 0; font-size: 14px; color: #9BA1AC">Choose which AI does the review and when it runs. The file list, categories, dependents and approvals never use AI.</p>
+</div>
+
+<section id="backend" style="padding: 20px 22px; border: 1px solid #2E3138; border-radius: 12px; background: #24262C">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #FFFFFF">AI backend</h2>
+<p style="margin: 4px 0 14px; font-size: 13px; color: #9BA1AC">The extension builds one review packet (changed sections plus context) and sends it to the backend you pick.</p>
+
+<div role="radiogroup" aria-label="AI backend" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{backends}}" as="b" hint-placeholder-count="6">
+<label style="{{b.cardStyle}}">
+<span style="display: flex; align-items: center; gap: 10px">
+<input type="radio" name="backend" checked="{{b.on}}" onChange="{{b.pick}}" style="width: 16px; height: 16px; margin: 0; accent-color: #4C8DFF">
+<span style="font-size: 14px; font-weight: 600; color: #EEF0F3">{{b.name}}</span>
+<sc-if value="{{b.hasBadge}}" hint-placeholder-val="{{ false }}"><span style="{{b.badgeStyle}}">{{b.badge}}</span></sc-if>
+</span>
+<span style="font-size: 12.5px; line-height: 1.5; color: #C3C8D0">{{b.desc}}</span>
+<span style="{{b.detailStyle}}">{{b.detail}}</span>
+</label>
+</sc-for>
+</div>
+
+<sc-if value="{{showApi}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding: 16px; border: 1px solid #33363D; border-radius: 10px; background: #1E1F24">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #9BA1AC">Provider
+<select style="min-height: 36px; padding: 0 10px; border: 1px solid #3A3D45; border-radius: 8px; background: #17181C; color: #E4E6EA; font-size: 13px">
+<option>Anthropic</option>
+<option>OpenAI</option>
+</select>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #9BA1AC">Model
+<input type="text" placeholder="claude-opus-5-5" style="min-height: 36px; padding: 0 10px; border: 1px solid #3A3D45; border-radius: 8px; background: #17181C; color: #E4E6EA; font-family: 'JetBrains Mono', monospace; font-size: 12.5px">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #9BA1AC">API key
+<input type="password" placeholder="Paste key — saved to secret storage" autocomplete="off" style="min-height: 36px; padding: 0 10px; border: 1px solid #3A3D45; border-radius: 8px; background: #17181C; color: #E4E6EA; font-size: 12.5px">
+</label>
+</div>
+</sc-if>
+
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid #33363D">
+<span style="{{statusDot}}"></span>
+<span style="font-size: 13px; color: #E4E6EA">{{statusText}}</span>
+<button style="margin-left: auto; min-height: 34px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 600; cursor: pointer">Test connection</button>
+</div>
+</section>
+
+<section id="triggers" style="padding: 20px 22px 8px; border: 1px solid #2E3138; border-radius: 12px; background: #24262C">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #FFFFFF">When AI runs</h2>
+<p style="margin: 4px 0 10px; font-size: 13px; color: #9BA1AC">AI only runs when something below triggers it.</p>
+<div style="{{autoBannerStyle}}">{{autoBanner}}</div>
+<sc-for list="{{triggers}}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #33363D">
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 14px; font-weight: 600; color: #EEF0F3">{{t.label}}</div>
+<div style="margin-top: 2px; font-size: 12.5px; color: #9BA1AC">{{t.desc}}</div>
+</div>
+<button onClick="{{t.toggle}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" disabled="{{t.locked}}" style="{{t.trackStyle}}"><span style="{{t.knobStyle}}"></span></button>
+</div>
+</sc-for>
+</section>
+
+<section id="tokens" style="padding: 20px 22px 8px; border: 1px solid #2E3138; border-radius: 12px; background: #24262C">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #FFFFFF">Token saving</h2>
+<p style="margin: 4px 0 10px; font-size: 13px; color: #9BA1AC">Keeps each run small. All on by default.</p>
+<sc-for list="{{savers}}" as="t" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #33363D">
+<div style="flex: 1; min-width: 0">
+<div style="font-size: 14px; font-weight: 600; color: #EEF0F3">{{t.label}}</div>
+<div style="margin-top: 2px; font-size: 12.5px; color: #9BA1AC">{{t.desc}}</div>
+</div>
+<button onClick="{{t.toggle}}" aria-pressed="{{t.pressed}}" aria-label="{{t.label}}" style="{{t.trackStyle}}"><span style="{{t.knobStyle}}"></span></button>
+</div>
+</sc-for>
+<sc-for list="{{choices}}" as="c" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid #33363D">
+<div style="flex: 1; min-width: 220px">
+<div style="font-size: 14px; font-weight: 600; color: #EEF0F3">{{c.label}}</div>
+<div style="margin-top: 2px; font-size: 12.5px; color: #9BA1AC">{{c.desc}}</div>
+</div>
+<div role="group" aria-label="{{c.label}}" style="display: flex; gap: 2px; padding: 3px; border: 1px solid #33363D; border-radius: 9px; background: #1A1B20">
+<sc-for list="{{c.options}}" as="o" hint-placeholder-count="3">
+<button onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="{{o.style}}">{{o.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</section>
+
+<section id="mcp" style="padding: 20px 22px; border: 1px solid #2E3138; border-radius: 12px; background: #24262C">
+<div style="display: flex; align-items: center; gap: 16px">
+<div style="flex: 1; min-width: 0">
+<h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #FFFFFF">Chat tools (MCP)</h2>
+<p style="margin: 4px 0 0; font-size: 13px; color: #9BA1AC">Let the AI chat you already use run the review — say “review my changes” in Cursor, Claude Code or Copilot agent mode.</p>
+</div>
+<button onClick="{{toggleMcp}}" aria-pressed="{{mcpPressed}}" aria-label="Expose review tools to your AI chat" style="{{mcpTrack}}"><span style="{{mcpKnob}}"></span></button>
+</div>
+<sc-if value="{{mcpOn}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px; padding: 14px 16px; border: 1px solid #33363D; border-radius: 10px; background: #1E1F24">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #9BA1AC">TOOLS THE CHAT CAN CALL</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #8FBCFF">get_review_packet</span><span style="font-size: 12.5px; color: #C3C8D0">— changed sections, context and categories for the current changes</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: #8FBCFF">submit_review</span><span style="font-size: 12.5px; color: #C3C8D0">— the chat sends back why, impact and risk per file; this panel fills in</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 4px; font-size: 12.5px; color: #9BA1AC">
+<span><span style="color: #9FE0B8; font-weight: 600">Cursor:</span> registered automatically</span>
+<span>·</span>
+<span>Claude Code and Copilot: add the server once</span>
+<button style="min-height: 32px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 600; cursor: pointer">Copy setup command</button>
+</div>
+</div>
+</sc-if>
+</section>
+
+<p style="margin: 0; font-size: 12.5px; color: #9BA1AC">Saved to workspace settings, so the whole team can share the same triggers. API keys stay in each person’s secret storage and are never written to the repo.</p>
+
+</div>
+</main>
+</div>
+
+<footer style="height: 26px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px; background: #1F3A63; color: #E6ECF5; font-size: 12px">
+<span>feat/cancel-orders</span>
+<span>Change Review · AI: {{backendShort}}</span>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1560}}'>
+var BACKENDS = [
+  { id: 'auto', name: 'Auto-detect', short: 'Auto (Cursor agent)', badge: 'Recommended', desc: 'Uses Copilot in VS Code and the Cursor agent in Cursor, so it works in both without setup.', detail: 'Detected here: Cursor agent CLI', ok: true },
+  { id: 'copilot', name: 'GitHub Copilot', short: 'GitHub Copilot', badge: 'VS Code only', desc: 'Borrows Copilot’s models through VS Code’s Language Model API. No API key; counts against your Copilot plan.', detail: 'Not available in Cursor', ok: false },
+  { id: 'cursor', name: 'Cursor agent', short: 'Cursor agent', badge: '', desc: 'Runs Cursor’s agent in the background in print mode. Uses your Cursor plan.', detail: 'Found: agent CLI', ok: true },
+  { id: 'claude', name: 'Claude Code', short: 'Claude Code', badge: '', desc: 'Runs claude -p in the background. Uses your Claude plan.', detail: 'Found: claude CLI', ok: true },
+  { id: 'codex', name: 'Codex', short: 'Codex', badge: '', desc: 'Runs OpenAI’s Codex CLI in the background. Uses your OpenAI plan.', detail: 'Not installed', ok: false },
+  { id: 'api', name: 'Your own API key', short: 'API key', badge: 'Pay per token', desc: 'Calls the Anthropic or OpenAI API directly. Most predictable output and easiest to keep in a fixed format.', detail: 'Key kept in VS Code secret storage', ok: true }
+];
+var TRIGGERS = [
+  { id: 'button', label: 'Run AI review button', desc: 'In the Change Review panel. Always available.', locked: true },
+  { id: 'palette', label: 'Command palette', desc: '“Change Review: Run AI review”. Always available.', locked: true },
+  { id: 'commit', label: 'Before you commit', desc: 'Source Control asks to review files the AI hasn’t seen yet.', auto: true },
+  { id: 'agent', label: 'When an AI agent session ends', desc: 'A hook from Cursor or Claude Code starts the review once the agent is done.', auto: true },
+  { id: 'save', label: 'When you save a reviewed file', desc: 'Re-runs only that file, after a few seconds without edits.', auto: true }
+];
+var SAVERS = [
+  { id: 'cache', label: 'Reuse saved results', desc: 'Only files that changed since the last run are sent again.' },
+  { id: 'hunks', label: 'Send changed sections, not whole files', desc: 'Each change goes with a few lines of context and the signatures it touches.' },
+  { id: 'batch', label: 'One request per review', desc: 'All files go in a single request instead of one request per file.' },
+  { id: 'rules', label: 'Categorise obvious files without AI', desc: 'Tests, CI files, migrations and configs are sorted by path rules.' }
+];
+var CHOICES = [
+  { id: 'context', label: 'Context lines around each change', desc: 'More context gives better explanations but costs more.', options: ['5', '10', '25'], def: '10' },
+  { id: 'limit', label: 'Ask before a run larger than', desc: 'Shows an estimate and asks first when a review would be big.', options: ['20k tokens', '50k tokens', '100k tokens'], def: '50k tokens' }
+];
+
+function track(on, locked) {
+  return 'position:relative;flex-shrink:0;width:44px;height:26px;padding:0;border-radius:999px;cursor:' + (locked ? 'default' : 'pointer') + ';border:1px solid ' + (on ? '#4C8DFF' : '#4A4E58') + ';background:' + (on ? (locked ? '#2F4E80' : '#3B6FD8') : '#2E3138');
+}
+function knob(on) {
+  return 'position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#FFFFFF;left:' + (on ? '21px' : '3px');
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    var s = this.state || {};
+    var self = this;
+    var backend = s.backend ?? 'auto';
+    var flags = s.flags ?? { button: true, palette: true, cache: true, hunks: true, batch: true, rules: true };
+    var picks = s.picks ?? {};
+    var mcpOn = !!s.mcpOn;
+    function flip(id) { var n = Object.assign({}, flags); n[id] = !n[id]; self.setState({ flags: n }); }
+
+    var sel = BACKENDS.find(function (b) { return b.id === backend; });
+    var backends = BACKENDS.map(function (b) {
+      var on = b.id === backend;
+      return {
+        name: b.name, desc: b.desc, detail: b.detail, badge: b.badge, hasBadge: !!b.badge, on: on,
+        pick: function () { self.setState({ backend: b.id }); },
+        cardStyle: 'display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:10px;cursor:pointer;border:1px solid ' + (on ? '#4C8DFF' : '#33363D') + ';background:' + (on ? 'rgba(76,141,255,0.10)' : '#1E1F24'),
+        badgeStyle: 'padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#C9DCFF;background:rgba(110,168,255,0.15)',
+        detailStyle: 'font-size:12px;font-weight:600;color:' + (b.ok ? '#9FE0B8' : '#F7CD8A')
+      };
+    });
+
+    var autoCount = TRIGGERS.filter(function (t) { return t.auto && flags[t.id]; }).length;
+    var triggers = TRIGGERS.map(function (t) {
+      var on = !!flags[t.id];
+      return {
+        label: t.label, desc: t.desc, locked: !!t.locked, pressed: on ? 'true' : 'false',
+        toggle: function () { if (!t.locked) { flip(t.id); } },
+        trackStyle: track(on, t.locked), knobStyle: knob(on)
+      };
+    });
+    var savers = SAVERS.map(function (t) {
+      var on = !!flags[t.id];
+      return { label: t.label, desc: t.desc, pressed: on ? 'true' : 'false', toggle: function () { flip(t.id); }, trackStyle: track(on, false), knobStyle: knob(on) };
+    });
+    var choices = CHOICES.map(function (c) {
+      var cur = picks[c.id] ?? c.def;
+      return {
+        label: c.label, desc: c.desc,
+        options: c.options.map(function (o) {
+          var on = o === cur;
+          return {
+            label: o, pressed: on ? 'true' : 'false',
+            pick: function () { var n = Object.assign({}, picks); n[c.id] = o; self.setState({ picks: n }); },
+            style: 'min-height:32px;padding:0 12px;border:0;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer;background:' + (on ? '#2C3647' : 'transparent') + ';color:' + (on ? '#FFFFFF' : '#C3C8D0')
+          };
+        })
+      };
+    });
+
+    return {
+      backends: backends,
+      showApi: backend === 'api',
+      statusText: sel.ok ? 'Ready · ' + sel.detail : 'Not ready · ' + sel.detail,
+      statusDot: 'width:9px;height:9px;border-radius:50%;flex-shrink:0;background:' + (sel.ok ? '#7FD1A0' : '#F2B661'),
+      backendShort: sel.short,
+      triggers: triggers,
+      autoBanner: autoCount === 0 ? 'Automatic runs are off. AI only runs when you press Run AI review or use the command.' : autoCount + ' automatic trigger' + (autoCount > 1 ? 's are' : ' is') + ' on. Runs still reuse saved results, but expect more token use.',
+      autoBannerStyle: 'margin-bottom:6px;padding:10px 12px;border-radius:8px;font-size:12.5px;border:1px solid ' + (autoCount === 0 ? '#3F7A5A' : '#6B5537') + ';background:' + (autoCount === 0 ? 'rgba(127,209,160,0.08)' : 'rgba(242,182,97,0.10)') + ';color:' + (autoCount === 0 ? '#9FE0B8' : '#F7CD8A'),
+      savers: savers,
+      choices: choices,
+      mcpOn: mcpOn,
+      mcpPressed: mcpOn ? 'true' : 'false',
+      toggleMcp: function () { self.setState({ mcpOn: !mcpOn }); },
+      mcpTrack: track(mcpOn, false),
+      mcpKnob: knob(mcpOn)
+    };
+  }
+}
+</script>
+</body>
+</html>

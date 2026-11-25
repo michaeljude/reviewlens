@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Change Review – MR comments in the editor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#16171B}
+a{color:#8FBCFF}a:hover{color:#B9D5FF}
+button,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height: 1000px; display: flex; flex-direction: column; background: #1E1F24; color: #D7DAE0; font-family: Inter, system-ui, sans-serif; font-size: 13px; line-height: 1.45">
+
+<header style="height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 8px; background: #18191D; border-bottom: 1px solid #2E3138; color: #9BA1AC; font-size: 12px">
+<span>orders-monorepo</span>
+<span aria-hidden="true">·</span>
+<span style="color: #D7DAE0">refund.service.ts</span>
+</header>
+
+<div style="flex: 1; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Activity bar" style="width: 52px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0; background: #18191D; border-right: 1px solid #2E3138">
+<button aria-label="Explorer" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+</button>
+<button aria-label="Source control" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 8px; background: transparent; color: #9BA1AC; cursor: pointer">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2.5"></circle><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="7" r="2.5"></circle><path d="M6 7.5v9"></path><path d="M18 9.5c0 5-7 4-11.5 7.5"></path></svg>
+</button>
+<a href="PRs.dc.html" aria-label="Change Review" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: #2C3647; color: #FFFFFF">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h12"></path><path d="M4 10h7"></path><path d="M4 15h5"></path><circle cx="16" cy="15" r="4"></circle><path d="m19 18 2.5 2.5"></path></svg>
+</a>
+</nav>
+
+<main style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column">
+
+<div style="height: 38px; flex-shrink: 0; display: flex; align-items: stretch; background: #18191D; border-bottom: 1px solid #2E3138">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #1E1F24; border-right: 1px solid #2E3138; color: #EEF0F3; font-size: 12.5px">refund.service.ts <span style="{{dirtyDot}}"></span></div>
+<div style="display: flex; align-items: center; padding: 0 16px; color: #9BA1AC; font-size: 12.5px">OrderDetail.tsx</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 20px; border-bottom: 1px solid #2E3138; font-size: 12px; color: #9BA1AC">
+<span style="font-family: 'JetBrains Mono', monospace">services › api › src › payments › refund.service.ts</span>
+<span style="margin-left: auto; padding: 1px 8px; border-radius: 6px; background: #2C3647; color: #C9DCFF; font-weight: 600">GitHub #482 · 1 thread on this file</span>
+</div>
+
+<div style="flex: 1; overflow-x: auto; padding: 12px 0 24px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; line-height: 1.8">
+
+<sc-for list="{{before}}" as="ln" hint-placeholder-count="10">
+<div style="{{ln.style}}">
+<span style="width: 56px; flex-shrink: 0; padding-right: 16px; text-align: right; color: #8A909B">{{ln.n}}</span>
+<span style="{{ln.gutterStyle}}"></span>
+<span style="white-space: pre; padding-right: 24px; color: #E4E6EA">{{ln.code}}</span>
+</div>
+</sc-for>
+
+<div style="margin: 6px 24px 10px 76px; max-width: 760px; border: 1px solid #3A4A66; border-radius: 10px; background: #23262E; font-family: Inter, system-ui, sans-serif; font-size: 13px">
+
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-bottom: 1px solid #33363D">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8FBCFF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>
+<span style="font-weight: 600; color: #EEF0F3">Review thread · line 29</span>
+<span style="color: #9BA1AC">from GitHub #482</span>
+<span style="{{statePill}}">{{stateLabel}}</span>
+</div>
+
+<div style="display: flex; gap: 12px; padding: 14px">
+<span style="width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #8FBCFF; color: #17181C; font-size: 11px; font-weight: 700" aria-hidden="true">BR</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 12.5px"><span style="font-weight: 600; color: #EEF0F3">Backend reviewer</span> <span style="color: #9BA1AC">· backend-team · 2h ago</span></div>
+<div style="font-size: 14px; line-height: 1.5; color: #E4E6EA">Please keep the original error as the cause — the payments webhook checks error.code and this hides it.</div>
+<div style="border: 1px solid #2E3138; border-radius: 6px; overflow: hidden">
+<div style="padding: 4px 10px; background: #1B1C21; border-bottom: 1px solid #2E3138; font-size: 11.5px; font-weight: 600; color: #9BA1AC">Suggested change</div>
+<div style="padding: 4px 0; background: #17181C; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; overflow-x: auto">
+<div style="display: flex; min-width: max-content; padding: 0 10px; background: rgba(255,138,128,0.11); white-space: pre"><span style="width: 18px; color: #FF9E96">−</span>  } catch (e) { throw new RefundFailedError(e); }</div>
+<div style="display: flex; min-width: max-content; padding: 0 10px; background: rgba(127,209,160,0.11); white-space: pre"><span style="width: 18px; color: #7FD1A0">+</span>  } catch (e) { throw new RefundFailedError(e.message, { cause: e }); }</div>
+</div>
+</div>
+</div>
+</div>
+
+<sc-if value="{{applied}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-top: 1px solid #33363D; background: rgba(127,209,160,0.06)">
+<span style="width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #9FE0B8; color: #17181C; font-size: 11px; font-weight: 700" aria-hidden="true">YOU</span>
+<div style="flex: 1; min-width: 0; font-size: 13.5px; color: #E4E6EA"><span style="font-weight: 600">Draft reply</span> <span style="color: #9BA1AC">· posts when you push</span><br>Applied your suggestion — the original error is now kept as the cause.</div>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border-top: 1px solid #33363D">
+<label style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #9BA1AC">Reply to the thread</span>
+<textarea rows="2" placeholder="Write a reply — it posts to GitHub" style="resize: vertical; padding: 8px 10px; border: 1px solid #3A3D45; border-radius: 8px; background: #1B1C21; color: #E4E6EA; font-size: 13px"></textarea>
+</label>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button onClick="{{apply}}" style="{{applyBtnStyle}}">{{applyLabel}}</button>
+<button style="min-height: 34px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Fix with agent</button>
+<button style="min-height: 34px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">Reply</button>
+<button onClick="{{resolve}}" style="min-height: 34px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 8px; background: transparent; color: #D7DAE0; font-size: 12.5px; font-weight: 500; cursor: pointer">{{resolveLabel}}</button>
+</div>
+</div>
+</div>
+
+<sc-for list="{{after}}" as="ln" hint-placeholder-count="6">
+<div style="{{ln.style}}">
+<span style="width: 56px; flex-shrink: 0; padding-right: 16px; text-align: right; color: #8A909B">{{ln.n}}</span>
+<span style="{{ln.gutterStyle}}"></span>
+<span style="white-space: pre; padding-right: 24px; color: #E4E6EA">{{ln.code}}</span>
+</div>
+</sc-for>
+
+</div>
+
+<sc-if value="{{applied}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 20px 20px; padding: 12px 16px; border: 1px solid #3F7A5A; border-radius: 10px; background: #1F2A24">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9FE0B8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>
+<span style="flex: 1; min-width: 220px; font-size: 13.5px; color: #E4E6EA">1 review fix ready. Commit, push and reply on the PR in one step.</span>
+<button style="min-height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #3B6FD8; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Commit, push and reply</button>
+</div>
+</sc-if>
+
+</main>
+
+<aside aria-label="PR comments" style="flex: 1 1 300px; min-width: 260px; max-width: 380px; display: flex; flex-direction: column; background: #22242A; border-left: 1px solid #2E3138">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 16px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #9BA1AC">PR COMMENTS · #482</span>
+<span style="font-size: 12px; color: #9BA1AC">{{openCount}} open</span>
+</div>
+<div style="display: flex; gap: 6px; padding: 0 12px 10px">
+<button aria-pressed="true" style="min-height: 30px; padding: 0 12px; border: 1px solid #4C8DFF; border-radius: 999px; background: rgba(76,141,255,0.18); color: #FFFFFF; font-size: 12px; cursor: pointer">For me to fix</button>
+<button aria-pressed="false" style="min-height: 30px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 999px; background: transparent; color: #C3C8D0; font-size: 12px; cursor: pointer">All</button>
+<button aria-pressed="false" style="min-height: 30px; padding: 0 12px; border: 1px solid #3A3D45; border-radius: 999px; background: transparent; color: #C3C8D0; font-size: 12px; cursor: pointer">Resolved</button>
+</div>
+<sc-for list="{{threads}}" as="th" hint-placeholder-count="3">
+<button style="{{th.rowStyle}}">
+<span style="display: flex; align-items: center; gap: 8px; width: 100%">
+<span style="{{th.avatarStyle}}" aria-hidden="true">{{th.initials}}</span>
+<span style="font-size: 12.5px; font-weight: 600; color: #EEF0F3">{{th.author}}</span>
+<span style="{{th.pillStyle}}">{{th.state}}</span>
+</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #8FBCFF">{{th.where}}</span>
+<span style="font-size: 12.5px; color: #C3C8D0">{{th.text}}</span>
+</button>
+</sc-for>
+<div style="margin-top: auto; padding: 14px 16px; border-top: 1px solid #2E3138; font-size: 12px; color: #9BA1AC">Comments sync both ways with GitHub and GitLab. Replies and resolves you make here show up on the PR.</div>
+</aside>
+
+</div>
+
+<footer style="height: 26px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 12px; background: #1F3A63; color: #E6ECF5; font-size: 12px">
+<span>feat/cancel-orders · GitHub #482</span>
+<span>{{footerText}}</span>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+var BEFORE = [
+  { n: '20', c: "import { provider } from './provider';" },
+  { n: '21', c: '' },
+  { n: '22', c: 'export async function refund(' },
+  { n: '23', c: '  orderId: string,' },
+  { n: '24', c: '  amount?: Money' },
+  { n: '25', c: ') {' },
+  { n: '26', c: "  const key = `refund:${orderId}:${amount ?? 'full'}`;" },
+  { n: '27', c: '  try {' },
+  { n: '28', c: '    return await provider.refund({ orderId, amount, key });' }
+];
+var LINE29_OLD = '  } catch (e) { throw new RefundFailedError(e); }';
+var LINE29_NEW = '  } catch (e) { throw new RefundFailedError(e.message, { cause: e }); }';
+var AFTER = [
+  { n: '30', c: '}' },
+  { n: '31', c: '' },
+  { n: '32', c: 'export class RefundFailedError extends Error {' },
+  { n: '33', c: "  name = 'RefundFailedError';" },
+  { n: '34', c: '}' }
+];
+
+function line(l, mark) {
+  var bg = mark === 'thread' ? 'rgba(76,141,255,0.10)' : mark === 'changed' ? 'rgba(127,209,160,0.11)' : 'transparent';
+  var gut = mark === 'thread' ? '#4C8DFF' : mark === 'changed' ? '#7FD1A0' : 'transparent';
+  return {
+    n: l.n, code: l.c,
+    style: 'display:flex;min-width:max-content;background:' + bg,
+    gutterStyle: 'width:3px;flex-shrink:0;margin-right:14px;background:' + gut
+  };
+}
+function pill(fg, bg) {
+  return 'display:inline-flex;align-items:center;height:22px;padding:0 10px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;margin-left:auto;color:' + fg + ';background:' + bg;
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    var s = this.state || {};
+    var applied = !!s.applied;
+    var resolved = !!s.resolved;
+    var self = this;
+    var before = BEFORE.map(function (l) { return line(l, ''); });
+    before.push(line({ n: '29', c: applied ? LINE29_NEW : LINE29_OLD }, applied ? 'changed' : 'thread'));
+
+    var threads = [
+      { initials: 'BR', author: 'Backend reviewer', where: 'refund.service.ts:29', text: 'Keep the original error as the cause.', state: resolved ? 'Resolved' : applied ? 'Fixed locally' : 'Open', color: '#8FBCFF', on: true },
+      { initials: 'PL', author: 'Platform lead', where: 'packages/shared/types/order.ts:12', text: 'StatusBadge and order.mapper need a cancelled case.', state: 'Needs you', color: '#B79CFF' },
+      { initials: 'MR', author: 'Mobile reviewer', where: 'OrderDetail.tsx:112', text: 'Hide Cancel when opened from a push notification?', state: 'Open', color: '#6FD6C6' }
+    ].map(function (t) {
+      var p = t.state === 'Resolved' || t.state === 'Fixed locally' ? pill('#9FE0B8', 'rgba(127,209,160,0.14)') : t.state === 'Needs you' ? pill('#F7CD8A', 'rgba(242,182,97,0.16)') : pill('#C9DCFF', 'rgba(110,168,255,0.15)');
+      return {
+        initials: t.initials, author: t.author, where: t.where, text: t.text, state: t.state, pillStyle: p,
+        avatarStyle: 'width:24px;height:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:10px;font-weight:700;color:#17181C;background:' + t.color,
+        rowStyle: 'display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:100%;min-height:44px;padding:12px 16px;border:0;border-top:1px solid #2E3138;text-align:left;cursor:pointer;background:' + (t.on ? '#2C3647' : 'transparent')
+      };
+    });
+
+    var stateLabel = resolved ? 'Resolved' : applied ? 'Fixed locally · not pushed' : 'Open';
+    var statePill = resolved || applied ? pill('#9FE0B8', 'rgba(127,209,160,0.14)') : pill('#C9DCFF', 'rgba(110,168,255,0.15)');
+
+    return {
+      before: before,
+      after: AFTER.map(function (l) { return line(l, ''); }),
+      applied: applied,
+      stateLabel: stateLabel,
+      statePill: statePill,
+      applyLabel: applied ? 'Undo suggestion' : 'Apply suggestion',
+      applyBtnStyle: 'min-height:34px;padding:0 12px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;border:' + (applied ? '1px solid #3A3D45' : '0') + ';background:' + (applied ? 'transparent' : '#3B6FD8') + ';color:' + (applied ? '#D7DAE0' : '#FFFFFF'),
+      apply: function () { self.setState({ applied: !applied, resolved: false }); },
+      resolveLabel: resolved ? 'Reopen thread' : 'Resolve thread',
+      resolve: function () { self.setState({ resolved: !resolved }); },
+      dirtyDot: 'width:8px;height:8px;border-radius:50%;background:' + (applied ? '#EEF0F3' : 'transparent'),
+      openCount: resolved ? 2 : 3,
+      footerText: applied ? '1 unpushed review fix' : '3 open review threads'
+    };
+  }
+}
+</script>
+</body>
+</html>
