@@ -11,13 +11,13 @@
     "color": "#1E3A6E",
     "theme": "dark"
   },
-  "homepage": "https://github.com/michaeljude/ai-change-reviewer#readme",
+  "homepage": "https://github.com/michaeljude/reviewlens#readme",
   "bugs": {
-    "url": "https://github.com/michaeljude/ai-change-reviewer/issues"
+    "url": "https://github.com/michaeljude/reviewlens/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/michaeljude/ai-change-reviewer.git"
+    "url": "https://github.com/michaeljude/reviewlens.git"
   },
   "engines": {
     "vscode": "^1.90.0"

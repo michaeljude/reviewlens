@@ -78,8 +78,8 @@ Pull request and merge request review for GitHub and GitLab with per-area review
 ## Building from source
 
 ```bash
-git clone https://github.com/michaeljude/ai-change-reviewer.git
-cd ai-change-reviewer
+git clone https://github.com/michaeljude/reviewlens.git
+cd reviewlens
 npm install
 npm test
 npm run package
