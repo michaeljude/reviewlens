@@ -3,7 +3,7 @@
   "displayName": "ReviewLens: AI Change Review",
   "description": "Explain, categorise and approve AI-written code changes, file by file: your local changes and GitHub pull requests or GitLab merge requests.",
   "version": "0.1.0",
-  "publisher": "michaeljude",
+  "publisher": "JudeMichaeldeRoma",
   "license": "MIT",
   "preview": true,
   "icon": "images/icon.png",
