@@ -16,7 +16,7 @@ interface SavedDecision {
 
 const ANALYSES = 'reviewlens.analyses.v1';
 const DECISIONS = 'reviewlens.decisions.v1';
-const SUMMARY = 'reviewlens.summary.v1';
+const SUMMARY = 'reviewlens.summaries.v2';
 const MAX_ANALYSES = 1000;
 
 /** Saved AI results (by file version) and per-file decisions, kept per workspace. */
@@ -64,11 +64,21 @@ export class Store {
     await this.memento.update(DECISIONS, all);
   }
 
-  getSummary(): { text: string; at: number; backend: string } | undefined {
-    return this.memento.get(SUMMARY);
+  /** Overall summaries, one per review ("local", or a pull/merge request key). */
+  getSummary(key: string): { text: string; at: number; backend: string } | undefined {
+    return this.memento.get<Record<string, { text: string; at: number; backend: string }>>(SUMMARY, {})[key];
   }
 
-  async saveSummary(text: string, backend: string): Promise<void> {
-    await this.memento.update(SUMMARY, { text, at: Date.now(), backend });
+  async saveSummary(key: string, text: string, backend: string): Promise<void> {
+    const all = { ...this.memento.get<Record<string, { text: string; at: number; backend: string }>>(SUMMARY, {}) };
+    all[key] = { text, at: Date.now(), backend };
+    const keys = Object.keys(all);
+    if (keys.length > 100) {
+      keys
+        .sort((a, b) => all[a].at - all[b].at)
+        .slice(0, keys.length - 100)
+        .forEach((k) => delete all[k]);
+    }
+    await this.memento.update(SUMMARY, all);
   }
 }

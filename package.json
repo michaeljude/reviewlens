@@ -1,8 +1,8 @@
 {
   "name": "reviewlens",
   "displayName": "ReviewLens: AI Change Review",
-  "description": "Explain, categorise and approve AI-written code changes, file by file.",
-  "version": "0.0.2",
+  "description": "Explain, categorise and approve AI-written code changes, file by file: your local changes and GitHub pull requests or GitLab merge requests.",
+  "version": "0.1.0",
   "publisher": "michaeljude",
   "license": "MIT",
   "preview": true,
@@ -37,7 +37,11 @@
     "claude",
     "approve",
     "reviewlens",
-    "change review"
+    "change review",
+    "pull request",
+    "merge request",
+    "github",
+    "gitlab"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
@@ -84,6 +88,27 @@
       {
         "command": "reviewLens.clearSavedResults",
         "title": "Clear saved AI results",
+        "category": "ReviewLens"
+      },
+      {
+        "command": "reviewLens.showPullRequests",
+        "title": "Show pull / merge requests",
+        "category": "ReviewLens",
+        "icon": "$(git-pull-request)"
+      },
+      {
+        "command": "reviewLens.signIn",
+        "title": "Sign in to GitHub / GitLab",
+        "category": "ReviewLens"
+      },
+      {
+        "command": "reviewLens.useToken",
+        "title": "Use a personal access token",
+        "category": "ReviewLens"
+      },
+      {
+        "command": "reviewLens.signOut",
+        "title": "Remove saved access token",
         "category": "ReviewLens"
       }
     ],
@@ -193,6 +218,14 @@
             ]
           },
           "description": "Areas of the repo, as path prefixes. Files are grouped by the first area whose prefix matches; others go to \"Other\"."
+        },
+        "reviewLens.gitlabHosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Self-hosted GitLab servers whose names don't contain \"gitlab\", for example code.example.com."
         }
       }
     }

@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { categoryLabel } from './classify';
-import { Controller } from './controller';
+import { Controller, Mode } from './controller';
 import { statusWord } from './review';
 import { Decision } from './store';
 
@@ -29,7 +29,9 @@ function html(webview: vscode.Webview, extensionUri: vscode.Uri, script: string,
 }
 
 type SidebarMessage =
-  | { type: 'ready' | 'run' | 'refresh' | 'settings' | 'approveLowRisk' }
+  | { type: 'ready' | 'run' | 'refresh' | 'settings' | 'approveLowRisk' | 'signIn' | 'useToken' | 'back' | 'openPrWeb' }
+  | { type: 'mode'; mode: Mode }
+  | { type: 'selectPr'; number: number }
   | { type: 'open'; path: string }
   | { type: 'decide'; path: string; decision: Decision };
 
@@ -66,7 +68,25 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         void this.controller.runReview();
         break;
       case 'refresh':
-        void this.controller.refresh();
+        void this.controller.reload();
+        break;
+      case 'mode':
+        void this.controller.setMode(m.mode);
+        break;
+      case 'signIn':
+        void this.controller.signIn();
+        break;
+      case 'useToken':
+        void this.controller.useToken();
+        break;
+      case 'selectPr':
+        void this.controller.selectPr(m.number);
+        break;
+      case 'back':
+        this.controller.backToList();
+        break;
+      case 'openPrWeb':
+        this.controller.openPrOnWeb();
         break;
       case 'settings':
         void vscode.commands.executeCommand('reviewLens.openSettings');
@@ -83,13 +103,23 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     }
   }
 
+  /** Shows the panel if it has been opened before in this window. */
+  reveal(): boolean {
+    if (!this.view) {
+      return false;
+    }
+    this.view.show(true);
+    return true;
+  }
+
   private push(): void {
     void this.view?.webview.postMessage({ type: 'state', state: this.controller.viewState() });
   }
 }
 
 type DetailMessage =
-  | { type: 'ready' | 'openDiff' | 'openFile' | 'runOne' }
+  | { type: 'ready' | 'openDiff' | 'openFile' | 'runOne' | 'openWeb' }
+  | { type: 'openUrl'; url: string }
   | { type: 'decide'; decision: Decision };
 
 export class DetailPanel implements vscode.Disposable {
@@ -151,6 +181,19 @@ export class DetailPanel implements vscode.Disposable {
       case 'openDiff':
         await this.openDiff(filePath);
         break;
+      case 'openWeb': {
+        const url = this.controller.prFileUrl(filePath);
+        if (url) {
+          await vscode.env.openExternal(vscode.Uri.parse(url));
+        }
+        break;
+      }
+      case 'openUrl':
+        // Only links to the PR host that the extension itself put in the page.
+        if (this.controller.commentsFor(filePath).some((c) => c.url === m.url)) {
+          await vscode.env.openExternal(vscode.Uri.parse(m.url));
+        }
+        break;
       case 'runOne':
         this.running = true;
         this.push();
@@ -171,8 +214,13 @@ export class DetailPanel implements vscode.Disposable {
 
   private async openFile(filePath: string): Promise<void> {
     const uri = this.uri(filePath);
-    if (uri) {
+    if (!uri) {
+      return;
+    }
+    try {
       await vscode.window.showTextDocument(uri, { viewColumn: vscode.ViewColumn.Beside, preview: false });
+    } catch {
+      vscode.window.showInformationMessage(`${filePath} doesn't exist in your local copy. Check out the branch to edit it.`);
     }
   }
 
@@ -193,13 +241,28 @@ export class DetailPanel implements vscode.Disposable {
       return;
     }
     const e = this.controller.entry(this.current);
+    const mode = this.controller.currentMode;
     if (!e) {
       void this.panel.webview.postMessage({
         type: 'detail',
-        detail: { exists: false, name: path.posix.basename(this.current), diffLines: [] },
+        detail: {
+          exists: false,
+          name: path.posix.basename(this.current),
+          missingText: mode === 'pr' ? 'This file isn’t part of the open pull/merge request.' : 'This file has no uncommitted changes any more.',
+          diffLines: [],
+        },
       });
       return;
     }
+    const comments = this.controller.commentsFor(e.file.path).map((c) => ({
+      author: c.author,
+      body: c.body,
+      createdAt: c.createdAt,
+      line: c.line,
+      url: c.url,
+      resolved: c.resolved,
+      isReply: c.isReply,
+    }));
     const all = e.diff ? e.diff.split('\n') : [];
     const category = e.ruleCategory ?? e.analysis?.category;
     const dir = path.posix.dirname(e.file.path);
@@ -222,6 +285,10 @@ export class DetailPanel implements vscode.Disposable {
         analysedBy: e.analysis ? e.analysedBy : undefined,
         decision: e.decision,
         running: this.running,
+        mode,
+        hostLabel: this.controller.hostLabel,
+        tooLarge: e.tooLarge,
+        comments,
         diffLines: all.slice(0, MAX_DIFF_LINES),
         diffTruncated: all.length > MAX_DIFF_LINES,
       },

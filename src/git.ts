@@ -6,7 +6,7 @@ import * as path from 'path';
 const EMPTY_TREE = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
 const MAX_UNTRACKED_BYTES = 1_000_000;
 
-export type ChangeStatus = 'M' | 'A' | 'D' | 'T' | 'U' | '?';
+export type ChangeStatus = 'M' | 'A' | 'D' | 'R' | 'T' | 'U' | '?';
 
 export interface ChangedFile {
   /** Path relative to the repo root, with forward slashes. */

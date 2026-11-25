@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0 (preview)
+
+- New **Pull requests / Merge requests** tab: review open GitHub pull requests and GitLab merge requests (including self-hosted GitLab), with the ones waiting for your review listed first.
+- Sign in with the editor's GitHub account or a personal access token; GitLab uses a token with the `read_api` scope. Tokens are kept in the editor's secure storage.
+- PR files use the same area lanes, change types, on-demand AI review, saved results and per-file approvals as local changes. The AI also reads the PR's title and description.
+- Teammates' review comments show on each file, with links to open them on GitHub or GitLab.
+- New commands: Show pull / merge requests, Sign in, Use a personal access token, Remove saved access token. New setting: `reviewLens.gitlabHosts`.
+
 ## 0.0.2 (preview)
 
 - Renamed to **ReviewLens**. Commands and settings now start with `reviewLens.` (for example `reviewLens.backend`).

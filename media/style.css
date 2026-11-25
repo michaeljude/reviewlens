@@ -136,6 +136,11 @@ button {
 .tag { flex-shrink: 0; padding: 0 5px; border-radius: 3px; font-size: 0.78em; font-weight: 700; }
 .tag.changes { color: var(--medium); border: 1px solid var(--medium); }
 .tag.stale { color: var(--info); border: 1px solid var(--info); }
+.tag.comments { color: var(--vscode-foreground); border: 1px solid var(--border); }
+.comment { padding: 8px 0; border-top: 1px solid var(--border); }
+.comment.reply { margin-left: 18px; }
+.comment .who { font-weight: 600; }
+.comment .body { margin-top: 4px; white-space: pre-wrap; word-break: break-word; }
 .counts { flex-shrink: 0; font-family: var(--vscode-editor-font-family); font-size: 0.85em; }
 .warn {
   padding: 7px 9px;

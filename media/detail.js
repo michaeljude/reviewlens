@@ -1,6 +1,6 @@
 (function () {
   const vscode = acquireVsCodeApi();
-  const { el, RISK } = window.acr;
+  const { el, ago, RISK } = window.acr;
   const root = document.getElementById('root');
 
   function post(msg) { vscode.postMessage(msg); }
@@ -19,9 +19,10 @@
     const page = el('div', { class: 'detail' });
     root.append(page);
     if (!d.exists) {
-      page.append(el('h1', null, d.name), el('p', { class: 'muted' }, 'This file has no uncommitted changes any more.'));
+      page.append(el('h1', null, d.name), el('p', { class: 'muted' }, d.missingText || 'This file has no uncommitted changes any more.'));
       return;
     }
+    const isPr = d.mode === 'pr';
     const a = d.analysis;
     page.append(
       el('div', { class: 'muted small mono' }, d.dir ? d.dir + '/' : ''),
@@ -45,12 +46,31 @@
           'aria-pressed': String(d.decision === 'changes'),
           onclick: () => post({ type: 'decide', decision: 'changes' }),
         }, d.decision === 'changes' ? 'Changes requested' : 'Request changes'),
-        el('button', { class: 'btn secondary', onclick: () => post({ type: 'openDiff' }) }, 'Open side-by-side diff'),
-        d.status !== 'D' ? el('button', { class: 'btn secondary', onclick: () => post({ type: 'openFile' }) }, 'Edit file') : null,
+        isPr
+          ? el('button', { class: 'btn secondary', onclick: () => post({ type: 'openWeb' }) }, 'Open on ' + d.hostLabel)
+          : el('button', { class: 'btn secondary', onclick: () => post({ type: 'openDiff' }) }, 'Open side-by-side diff'),
+        d.status !== 'D' ? el('button', { class: 'btn secondary', onclick: () => post({ type: 'openFile' }) }, isPr ? 'Open local copy' : 'Edit file') : null,
       ),
     );
 
-    if (d.skipAi) {
+    if (isPr && d.comments && d.comments.length) {
+      page.append(el('div', { class: 'card' },
+        el('h2', { class: 'section-title' }, 'Comments from ' + d.hostLabel + ' (' + d.comments.length + ')'),
+        d.comments.map((c) => el('div', { class: 'comment' + (c.isReply ? ' reply' : '') },
+          el('div', { class: 'small' },
+            el('span', { class: 'who' }, c.author), ' ',
+            el('span', { class: 'muted' }, (c.line ? 'line ' + c.line + ' · ' : '') + ago(Date.parse(c.createdAt))),
+            c.resolved ? el('span', { class: 'tag stale', style: 'margin-left:6px' }, 'RESOLVED') : null,
+            c.url ? el('a', { href: '#', style: 'margin-left:8px', onclick: (e) => { e.preventDefault(); post({ type: 'openUrl', url: c.url }); } }, 'Open') : null,
+          ),
+          el('div', { class: 'body' }, c.body),
+        )),
+      ));
+    }
+
+    if (d.tooLarge) {
+      page.append(el('div', { class: 'card muted' }, d.hostLabel + ' didn’t send this file’s changes because the diff is too large, so it can’t be reviewed by AI here. Open it on ' + d.hostLabel + ' instead.'));
+    } else if (d.skipAi) {
       page.append(el('div', { class: 'card muted' }, 'This file is not sent to the AI (binary, deleted, lockfile or build output).'));
     } else if (!a) {
       page.append(el('div', { class: 'banner' },

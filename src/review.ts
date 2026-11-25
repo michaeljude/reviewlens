@@ -51,6 +51,7 @@ const STATUS_WORDS: Record<string, string> = {
   M: 'modified',
   A: 'added',
   D: 'deleted',
+  R: 'renamed',
   T: 'type changed',
   U: 'unmerged',
   '?': 'new (untracked)',
@@ -60,7 +61,7 @@ export function statusWord(status: string): string {
   return STATUS_WORDS[status] ?? status;
 }
 
-export function buildPrompt(files: PacketFile[], otherChangedPaths: string[]): string {
+export function buildPrompt(files: PacketFile[], otherChangedPaths: string[], context?: string): string {
   const lines: string[] = [];
   lines.push(
     'You are helping a developer review uncommitted code changes, often written by an AI agent, so they can understand and approve them quickly.',
@@ -86,6 +87,9 @@ export function buildPrompt(files: PacketFile[], otherChangedPaths: string[]): s
     '- If a diff is marked as shortened, say the analysis is partial.',
     '',
   );
+  if (context) {
+    lines.push('About this change:', context, '');
+  }
   if (otherChangedPaths.length > 0) {
     lines.push('Other files changed in the same set (not sent, for context only):');
     for (const p of otherChangedPaths) {
