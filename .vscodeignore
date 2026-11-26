@@ -10,3 +10,7 @@ out/test/**
 tsconfig.json
 .gitignore
 node_modules/**
+plugin.json
+skills/**
+commands/**
+rules/**

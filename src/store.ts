@@ -17,6 +17,7 @@ interface SavedDecision {
 const ANALYSES = 'reviewlens.analyses.v1';
 const DECISIONS = 'reviewlens.decisions.v1';
 const SUMMARY = 'reviewlens.summaries.v2';
+const SEEN = 'reviewlens.seenActivity.v1';
 const MAX_ANALYSES = 1000;
 
 /** Saved AI results (by file version) and per-file decisions, kept per workspace. */
@@ -80,5 +81,23 @@ export class Store {
         .forEach((k) => delete all[k]);
     }
     await this.memento.update(SUMMARY, all);
+  }
+
+  /** Activity ids (comments, reviews, review requests) the developer has already been told about, per key. */
+  getSeen(key: string): string[] | undefined {
+    return this.memento.get<Record<string, { ids: string[]; at: number }>>(SEEN, {})[key]?.ids;
+  }
+
+  async setSeen(key: string, ids: string[]): Promise<void> {
+    const all = { ...this.memento.get<Record<string, { ids: string[]; at: number }>>(SEEN, {}) };
+    all[key] = { ids: ids.slice(-500), at: Date.now() };
+    const keys = Object.keys(all);
+    if (keys.length > 200) {
+      keys
+        .sort((a, b) => all[a].at - all[b].at)
+        .slice(0, keys.length - 200)
+        .forEach((k) => delete all[k]);
+    }
+    await this.memento.update(SEEN, all);
   }
 }

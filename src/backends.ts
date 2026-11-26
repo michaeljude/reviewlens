@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { BackendError, cliErrorMessage, unwrapCliOutput } from './cli';
+import { BackendError, cliErrorMessage, isWorkspaceTrustPrompt, unwrapCliOutput, workspaceTrustMessage, WorkspaceTrustError } from './cli';
 
 export type BackendId = 'copilot' | 'cursor' | 'claude';
 
@@ -30,7 +30,7 @@ export function resolveBackend(setting: string): BackendId {
   return isCursor() ? 'cursor' : 'copilot';
 }
 
-export { BackendError };
+export { BackendError, WorkspaceTrustError };
 
 export async function runBackend(
   id: BackendId,
@@ -123,6 +123,10 @@ function runCli(
     child.on('close', (code) => {
       finish(() => {
         if (code !== 0) {
+          if (isWorkspaceTrustPrompt(stdout, stderr)) {
+            reject(new WorkspaceTrustError(workspaceTrustMessage(label)));
+            return;
+          }
           reject(new BackendError(cliErrorMessage(label, stdout, stderr, code)));
           return;
         }

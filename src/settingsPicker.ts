@@ -144,7 +144,21 @@ export async function openSettingsPicker(): Promise<void> {
     const items: Item[] = [
       { label: 'AI backend', description: backend?.label ?? c.get<string>('backend', 'auto'), run: pickBackend },
       ...TEXTS.map((t) => ({ label: t.label, description: c.get<string>(t.key, ''), run: () => editText(t.key, t.label) })),
+      {
+        label: 'Review notifications',
+        description: c.get<boolean>('notifications.enabled', true) ? 'on' : 'off',
+        detail: 'On Refresh: new review requests, and comments and reviews from others on your pull/merge requests.',
+        run: () => update('notifications.enabled', !c.get<boolean>('notifications.enabled', true)),
+      },
       ...NUMBERS.map((n) => ({ label: n.label, description: String(c.get<number>(n.key)), run: () => editNumber(n) })),
+      {
+        label: 'Review rules and skills',
+        description: c.get<boolean>('useRules', true) ? 'on' : 'off',
+        detail: 'Rules and review playbooks the AI follows, from .reviewlens/ and your personal rules.',
+        run: async () => {
+          await vscode.commands.executeCommand('reviewLens.manageRules');
+        },
+      },
       {
         label: 'Areas',
         description: Object.keys(c.get<Record<string, string[]>>('areas', {})).join(', ') || 'none',

@@ -5,7 +5,7 @@ import * as os from 'os';
 import * as path from 'path';
 import { test } from 'node:test';
 import { areaFor, ruleCategory, skipForAi } from '../classify';
-import { BackendError, cliErrorMessage, unwrapCliOutput } from '../cli';
+import { BackendError, cliErrorMessage, isWorkspaceTrustPrompt, unwrapCliOutput, workspaceTrustMessage } from '../cli';
 import { fileDiff, listChanges, parseNameStatus, parseNumstat } from '../git';
 import { buildPrompt, extractJsonObject, hashDiff, parseReview, shorten } from '../review';
 
@@ -109,6 +109,14 @@ test('CLI output: unwraps replies and turns error envelopes into short messages'
   assert.match(msg, /^Claude Code CLI: Failed to authenticate: OAuth session expired/);
   assert.match(msg, /Sign in again/);
   assert.equal(cliErrorMessage('Cursor agent CLI', '', 'boom\n', 2), 'Cursor agent CLI: boom');
+});
+
+test('CLI output: spots the Cursor agent workspace trust prompt', () => {
+  const prompt =
+    '\n⚠ Workspace Trust Required\n\n  Cursor Agent can execute code and access files in this directory.\n  Do you trust the contents of this directory?\n\n    /repo\n\n  To proceed, you can either:\n    • Run \'agent\' interactively to decide\n    • Pass --trust, --yolo, or -f if you trust this directory\n';
+  assert.equal(isWorkspaceTrustPrompt('', prompt), true);
+  assert.equal(isWorkspaceTrustPrompt('', 'boom'), false);
+  assert.match(workspaceTrustMessage('Cursor agent CLI'), /^Cursor agent CLI: it hasn't been allowed to work in this folder yet\./);
 });
 
 test('hash changes when the diff changes', () => {

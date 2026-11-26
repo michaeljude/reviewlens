@@ -1,0 +1,16 @@
+---
+description: After making changes across several files, end with a short per-file summary (why, what, possible impact, risk) so a human can review and approve them file by file.
+globs:
+alwaysApply: false
+---
+
+# Explain multi-file changes for review
+
+When you finish a task that changed three or more files, end your reply with a short review summary, so the developer can check and approve your work file by file (for example in the ReviewLens panel):
+
+- One line per changed file: `path`, change type (UI, Business logic, API & networking, Shared types, Database, Unit tests, Infra, CI/CD, Automation, Config & dependencies, Docs, Other), and risk (high / medium / low).
+- Under each file that is medium or high risk: **why** it changed in one sentence, and what it **might affect** (callers, other areas, data, deploy).
+- If behaviour changed but you added or updated no tests, say so.
+- If you changed a shared type, endpoint, schema or event, list the places that use it and whether you updated them.
+
+Keep it brief: this is a checklist for the reviewer, not a second explanation of the task.

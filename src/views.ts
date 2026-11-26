@@ -3,6 +3,8 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { categoryLabel } from './classify';
 import { Controller, Mode } from './controller';
+import { groupThreads, parsePatch } from './diff';
+import { ReviewEvent } from './hosts';
 import { statusWord } from './review';
 import { Decision } from './store';
 
@@ -29,7 +31,8 @@ function html(webview: vscode.Webview, extensionUri: vscode.Uri, script: string,
 }
 
 type SidebarMessage =
-  | { type: 'ready' | 'run' | 'refresh' | 'settings' | 'approveLowRisk' | 'signIn' | 'useToken' | 'back' | 'openPrWeb' }
+  | { type: 'ready' | 'run' | 'refresh' | 'settings' | 'rules' | 'approveLowRisk' | 'signIn' | 'useToken' | 'back' | 'openPrWeb' | 'checkActivity' }
+  | { type: 'submitReview'; event: ReviewEvent; body: string; summary: boolean }
   | { type: 'mode'; mode: Mode }
   | { type: 'selectPr'; number: number }
   | { type: 'open'; path: string }
@@ -38,6 +41,7 @@ type SidebarMessage =
 export class SidebarProvider implements vscode.WebviewViewProvider {
   static readonly viewId = 'reviewLens.changes';
   private view?: vscode.WebviewView;
+  private lastSent?: string;
 
   constructor(
     private readonly extensionUri: vscode.Uri,
@@ -45,6 +49,15 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     private readonly detail: DetailPanel,
   ) {
     controller.onDidChange(() => this.push());
+    controller.watcher.onDidChange(() => this.updateBadge());
+  }
+
+  private updateBadge(): void {
+    if (!this.view) {
+      return;
+    }
+    const n = this.controller.watcher.totalUnread;
+    this.view.badge = n > 0 ? { value: n, tooltip: `${n} new review update${n === 1 ? '' : 's'}` } : undefined;
   }
 
   resolveWebviewView(view: vscode.WebviewView): void {
@@ -52,6 +65,8 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     view.webview.options = { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(this.extensionUri, 'media')] };
     view.webview.html = html(view.webview, this.extensionUri, 'sidebar.js', 'ReviewLens');
     view.webview.onDidReceiveMessage((m: SidebarMessage) => this.onMessage(m));
+    this.lastSent = undefined;
+    this.updateBadge();
     view.onDidChangeVisibility(() => {
       if (view.visible) {
         void this.controller.refresh();
@@ -62,7 +77,16 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   private onMessage(m: SidebarMessage): void {
     switch (m.type) {
       case 'ready':
+        this.lastSent = undefined;
         this.push();
+        break;
+      case 'submitReview':
+        void this.controller.submitReview(m.event, m.body, m.summary === true).then((ok) => {
+          void this.view?.webview.postMessage({ type: 'done', key: 'review', ok });
+        });
+        break;
+      case 'checkActivity':
+        void this.controller.watcher.check(true);
         break;
       case 'run':
         void this.controller.runReview();
@@ -91,6 +115,9 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
       case 'settings':
         void vscode.commands.executeCommand('reviewLens.openSettings');
         break;
+      case 'rules':
+        void vscode.commands.executeCommand('reviewLens.manageRules');
+        break;
       case 'approveLowRisk':
         void this.controller.approveLowRisk();
         break;
@@ -113,19 +140,34 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   }
 
   private push(): void {
-    void this.view?.webview.postMessage({ type: 'state', state: this.controller.viewState() });
+    if (!this.view) {
+      return;
+    }
+    // Skip identical states, so refreshes that bring nothing new don’t re-render (and disturb) the panel.
+    const state = this.controller.viewState();
+    const json = JSON.stringify(state);
+    if (json === this.lastSent) {
+      return;
+    }
+    this.lastSent = json;
+    void this.view.webview.postMessage({ type: 'state', state });
   }
 }
 
 type DetailMessage =
-  | { type: 'ready' | 'openDiff' | 'openFile' | 'runOne' | 'openWeb' }
+  | { type: 'ready' | 'openDiff' | 'openFile' | 'runOne' | 'openWeb' | 'refresh' | 'rules' }
   | { type: 'openUrl'; url: string }
-  | { type: 'decide'; decision: Decision };
+  | { type: 'openRule'; source: string }
+  | { type: 'decide'; decision: Decision }
+  | { type: 'comment'; key: string; oldLine?: number; newLine?: number; body: string }
+  | { type: 'reply'; key: string; threadId: string; body: string }
+  | { type: 'resolve'; key: string; threadId: string; resolved: boolean };
 
 export class DetailPanel implements vscode.Disposable {
   private panel?: vscode.WebviewPanel;
   private current?: string;
   private running = false;
+  private lastSent?: string;
   private readonly subs: vscode.Disposable[] = [];
 
   constructor(
@@ -159,6 +201,7 @@ export class DetailPanel implements vscode.Disposable {
     panel.webview.onDidReceiveMessage((m: DetailMessage) => this.onMessage(m));
     panel.onDidDispose(() => {
       this.panel = undefined;
+      this.lastSent = undefined;
     });
     this.panel = panel;
   }
@@ -168,12 +211,27 @@ export class DetailPanel implements vscode.Disposable {
     if (!filePath) {
       return;
     }
+    const done = (key: string, ok: boolean) => void this.panel?.webview.postMessage({ type: 'done', key, ok });
+    const lineNo = (v: unknown) => (typeof v === 'number' && Number.isInteger(v) && v > 0 ? v : undefined);
     switch (m.type) {
       case 'ready':
+        this.lastSent = undefined;
         this.push();
         break;
       case 'decide':
         await this.controller.decide(filePath, m.decision);
+        break;
+      case 'refresh':
+        await this.controller.reload();
+        break;
+      case 'comment':
+        done(m.key, await this.controller.addComment(filePath, lineNo(m.oldLine), lineNo(m.newLine), m.body));
+        break;
+      case 'reply':
+        done(m.key, await this.controller.replyToThread(filePath, String(m.threadId), m.body));
+        break;
+      case 'resolve':
+        done(m.key, await this.controller.setThreadResolved(filePath, String(m.threadId), m.resolved === true));
         break;
       case 'openFile':
         await this.openFile(filePath);
@@ -185,6 +243,20 @@ export class DetailPanel implements vscode.Disposable {
         const url = this.controller.prFileUrl(filePath);
         if (url) {
           await vscode.env.openExternal(vscode.Uri.parse(url));
+        }
+        break;
+      }
+      case 'rules':
+        void vscode.commands.executeCommand('reviewLens.manageRules');
+        break;
+      case 'openRule': {
+        // Only rule files the extension itself listed for this file.
+        const root = this.controller.root;
+        const rule = this.controller.entry(filePath)?.rules.find((r) => r.source === m.source && r.source !== 'settings');
+        if (root && rule) {
+          await vscode.window.showTextDocument(vscode.Uri.file(path.join(root, rule.source)), { viewColumn: vscode.ViewColumn.Beside, preview: false });
+        } else if (m.source === 'settings') {
+          void vscode.commands.executeCommand('reviewLens.manageRules');
         }
         break;
       }
@@ -241,34 +313,31 @@ export class DetailPanel implements vscode.Disposable {
       return;
     }
     const e = this.controller.entry(this.current);
+    const send = (detail: unknown) => {
+      // Skip identical content, so refreshes that bring nothing new don’t re-render (and disturb) the page.
+      const json = JSON.stringify(detail);
+      if (json !== this.lastSent) {
+        this.lastSent = json;
+        void this.panel?.webview.postMessage({ type: 'detail', detail });
+      }
+    };
     const mode = this.controller.currentMode;
     if (!e) {
-      void this.panel.webview.postMessage({
-        type: 'detail',
-        detail: {
-          exists: false,
-          name: path.posix.basename(this.current),
-          missingText: mode === 'pr' ? 'This file isn’t part of the open pull/merge request.' : 'This file has no uncommitted changes any more.',
-          diffLines: [],
-        },
+      send({
+        exists: false,
+        name: path.posix.basename(this.current),
+        missingText: mode === 'pr' ? 'This file isn’t part of the open pull/merge request.' : 'This file has no uncommitted changes any more.',
+        rows: [],
+        threads: [],
       });
       return;
     }
-    const comments = this.controller.commentsFor(e.file.path).map((c) => ({
-      author: c.author,
-      body: c.body,
-      createdAt: c.createdAt,
-      line: c.line,
-      url: c.url,
-      resolved: c.resolved,
-      isReply: c.isReply,
-    }));
-    const all = e.diff ? e.diff.split('\n') : [];
+    const rows = parsePatch(e.diff);
+    const shown = rows.slice(0, MAX_DIFF_LINES);
+    const threads = groupThreads(this.controller.commentsFor(e.file.path), rows).map((t) => (t.row >= shown.length ? { ...t, row: -1 } : t));
     const category = e.ruleCategory ?? e.analysis?.category;
     const dir = path.posix.dirname(e.file.path);
-    void this.panel.webview.postMessage({
-      type: 'detail',
-      detail: {
+    send({
         exists: true,
         path: e.file.path,
         name: path.posix.basename(e.file.path),
@@ -282,16 +351,20 @@ export class DetailPanel implements vscode.Disposable {
         binary: e.file.binary,
         skipAi: e.skipAi,
         analysis: e.analysis,
+        rules: e.rules.map((r) => ({ title: r.title, kind: r.kind, severity: r.severity, source: r.source })),
+        rulesOn: vscode.workspace.getConfiguration('reviewLens').get<boolean>('useRules', true),
         analysedBy: e.analysis ? e.analysedBy : undefined,
         decision: e.decision,
         running: this.running,
         mode,
         hostLabel: this.controller.hostLabel,
         tooLarge: e.tooLarge,
-        comments,
-        diffLines: all.slice(0, MAX_DIFF_LINES),
-        diffTruncated: all.length > MAX_DIFF_LINES,
-      },
+        threads,
+        canComment: this.controller.canComment && !e.tooLarge && !e.file.binary,
+        me: this.controller.currentUser,
+        refreshing: this.controller.isRefreshing,
+        rows: shown,
+        diffTruncated: rows.length > MAX_DIFF_LINES,
     });
   }
 }

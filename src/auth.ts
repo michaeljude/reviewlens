@@ -43,8 +43,8 @@ export class HostAuth {
     const label = r.kind === 'github' ? 'GitHub' : 'GitLab';
     const where =
       r.kind === 'github'
-        ? 'github.com/settings/tokens (fine-grained: Pull requests and Contents, read-only)'
-        : `${r.host}/-/user_settings/personal_access_tokens (scope: read_api)`;
+        ? 'github.com/settings/tokens (fine-grained: Pull requests read and write, Contents read-only)'
+        : `${r.host}/-/user_settings/personal_access_tokens (scope: api; read_api only lets you read)`;
     const value = await vscode.window.showInputBox({
       title: `${label} access token for ${r.host}`,
       prompt: `Create one at ${where}. It is kept in the editor's secure storage.`,

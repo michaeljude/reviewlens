@@ -173,7 +173,93 @@ button {
   line-height: 1.6;
   padding: 6px 0;
 }
-.diff div { white-space: pre; padding: 0 12px; min-width: max-content; }
-.diff .a { background: var(--vscode-diffEditor-insertedLineBackground, rgba(115, 201, 145, 0.15)); }
-.diff .d { background: var(--vscode-diffEditor-removedLineBackground, rgba(229, 115, 115, 0.15)); }
-.diff .h { color: var(--muted); }
+.diff > .dl { display: flex; min-width: max-content; white-space: pre; }
+.diff > .dl.a { background: var(--vscode-diffEditor-insertedLineBackground, rgba(115, 201, 145, 0.15)); }
+.diff > .dl.d { background: var(--vscode-diffEditor-removedLineBackground, rgba(229, 115, 115, 0.15)); }
+.diff > .dl.h { color: var(--muted); }
+.diff > .dl.target { box-shadow: inset 3px 0 0 var(--info); }
+.diff .ln {
+  width: 5ch;
+  flex-shrink: 0;
+  padding-right: 6px;
+  text-align: right;
+  color: var(--muted);
+  opacity: 0.75;
+  user-select: none;
+}
+.diff .code { padding: 0 12px 0 4px; }
+.cbtn, .cbtn-space { width: 20px; flex-shrink: 0; }
+.cbtn {
+  height: 18px;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  font-weight: 700;
+  line-height: 18px;
+  opacity: 0;
+}
+.dl:hover .cbtn, .cbtn:focus-visible { opacity: 1; }
+
+/* Comment threads, inline under their line in the diff and in the comments card */
+.thread {
+  position: sticky;
+  left: 0;
+  width: min(100%, 780px);
+  margin: 6px 0;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--info);
+  border-radius: 6px;
+  background: var(--vscode-editor-background);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  line-height: 1.45;
+  white-space: normal;
+}
+.diff > .thread { margin: 6px 12px; width: min(calc(100% - 24px), 780px); }
+.thread.resolved { border-left-color: var(--low); }
+.thread.composer { border-left-color: var(--medium); }
+.thead { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.thead + .comment { border-top: 0; }
+.tactions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
+.reply-box { margin-top: 6px; }
+.input {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 6px;
+  padding: 6px 8px;
+  resize: vertical;
+  border: 1px solid var(--vscode-input-border, var(--border));
+  border-radius: 4px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+}
+.input:focus { outline: 1px solid var(--vscode-focusBorder); outline-offset: -1px; }
+.tag.ok { color: var(--low); border: 1px solid var(--low); }
+.tag.open { color: var(--medium); border: 1px solid var(--medium); }
+.tag.unread { color: var(--info); border: 1px solid var(--info); }
+.tag.comments.open { border-color: var(--medium); }
+
+/* Reviewers and posting a review */
+.reviewers { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 0.92em; }
+.reviewer.low { color: var(--low); }
+.reviewer.high { color: var(--high); }
+.reviewer.info { color: var(--info); }
+.reviewer.muted { color: var(--muted); }
+.review-card { display: flex; flex-direction: column; gap: 6px; }
+.review-card .section-title { margin: 0; }
+.review-card .input { margin-top: 0; }
+.review-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.review-buttons .btn { flex: 1; padding: 0 8px; }
+.check { display: flex; align-items: baseline; gap: 4px; }
+
+/* Review rules */
+.tag.rule { color: var(--high); border: 1px solid var(--high); }
+.rules-line { line-height: 1.5; }
+.rules-line .rule-mark { color: var(--info); }
+.rules-line .warn { margin-top: 4px; }

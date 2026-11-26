@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "reviewlens",
+  "version": "0.3.0",
+  "description": "Explanation-first review of AI-written code: why each file changed, what changed and what it might affect, grouped by area of your repo, for local changes and GitHub pull requests or GitLab merge requests.",
+  "author": {
+    "name": "JudeMichaeldeRoma",
+    "url": "https://github.com/michaeljude"
+  },
+  "homepage": "https://github.com/michaeljude/reviewlens#readme",
+  "repository": "https://github.com/michaeljude/reviewlens",
+  "license": "MIT",
+  "keywords": ["code-review", "pull-request", "merge-request", "github", "gitlab", "monorepo", "ai-review", "approve"]
+}

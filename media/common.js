@@ -36,5 +36,40 @@
     return n + ' ' + word + (n === 1 ? '' : 's');
   }
   const RISK = { high: 'High risk', medium: 'Medium risk', low: 'Low risk' };
-  window.acr = { el, ago, plural, RISK };
+
+  // Replaces the page's content without losing what you're doing: scroll positions, the focused text box and its cursor.
+  function rerender(root, build) {
+    const active = document.activeElement;
+    const key = active && active.dataset ? active.dataset.key : undefined;
+    const sel = key && typeof active.selectionStart === 'number' ? [active.selectionStart, active.selectionEnd] : null;
+    const scrollY = window.scrollY;
+    const scrolled = [...root.querySelectorAll('[data-scroll]')].map((n) => [n.dataset.scroll, n.scrollLeft, n.scrollTop]);
+    root.replaceChildren();
+    build();
+    window.scrollTo(0, scrollY);
+    for (const [id, left, top] of scrolled) {
+      const n = root.querySelector('[data-scroll="' + id + '"]');
+      if (n) { n.scrollLeft = left; n.scrollTop = top; }
+    }
+    if (key) {
+      const n = root.querySelector('[data-key="' + CSS.escape(key) + '"]');
+      if (n) {
+        n.focus({ preventScroll: true });
+        if (sel && n.setSelectionRange) n.setSelectionRange(sel[0], sel[1]);
+      }
+    }
+  }
+
+  // A text box whose text is kept in drafts[key], so re-rendering never loses it.
+  function textarea(drafts, key, attrs, onChange) {
+    const t = el('textarea', Object.assign({ 'data-key': key, rows: 3 }, attrs || {}));
+    t.value = drafts[key] || '';
+    t.addEventListener('input', () => {
+      drafts[key] = t.value;
+      if (onChange) onChange(t.value);
+    });
+    return t;
+  }
+
+  window.acr = { el, ago, plural, RISK, rerender, textarea };
 })();

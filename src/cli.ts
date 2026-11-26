@@ -2,6 +2,21 @@
 
 export class BackendError extends Error {}
 
+/**
+ * The Cursor agent CLI refuses to run in a folder you haven't trusted yet, and asks interactively instead.
+ * ReviewLens never trusts a folder for you: trusting lets the agent run code there.
+ */
+export class WorkspaceTrustError extends BackendError {}
+
+/** Whether a failed CLI run stopped at the Cursor agent's workspace trust prompt. */
+export function isWorkspaceTrustPrompt(stdout: string, stderr: string): boolean {
+  return /workspace trust required/i.test(`${stdout}\n${stderr}`);
+}
+
+export function workspaceTrustMessage(label: string): string {
+  return `${label}: it hasn't been allowed to work in this folder yet. Run it once in a terminal here and choose to trust the folder, then run the review again.`;
+}
+
 /** The CLIs print a JSON envelope whose `result` field holds the model's reply, or the error when `is_error` is set. */
 export function unwrapCliOutput(stdout: string): string {
   const trimmed = stdout.trim();

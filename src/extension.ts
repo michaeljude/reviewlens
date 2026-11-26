@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { HostAuth } from './auth';
 import { Controller } from './controller';
+import { newRuleFile, openRulesMenu } from './rulesMenu';
 import { openSettingsPicker } from './settingsPicker';
 import { Store } from './store';
 import { DetailPanel, SidebarProvider } from './views';
@@ -22,14 +23,16 @@ export function activate(context: vscode.ExtensionContext): void {
       status.hide();
       return;
     }
+    const unread = controller.watcher.totalUnread;
+    const bell = unread > 0 ? ` $(bell-dot) ${unread}` : '';
     if (s.files.length === 0) {
-      status.text = '$(checklist) ReviewLens';
-      status.tooltip = 'Open ReviewLens';
+      status.text = `$(checklist) ReviewLens${bell}`;
+      status.tooltip = unread > 0 ? `Open ReviewLens. ${unread} new review update(s).` : 'Open ReviewLens';
     } else {
       const approved = s.files.filter((f) => f.decision === 'approved').length;
       const where = s.mode === 'pr' && s.pr.selected ? ` (#${s.pr.selected.number})` : '';
-      status.text = `$(checklist) ${approved}/${s.files.length} approved${where}`;
-      status.tooltip = `Open ReviewLens. ${s.needsAiCount > 0 ? `${s.needsAiCount} file(s) not reviewed by AI yet.` : 'AI review up to date.'}`;
+      status.text = `$(checklist) ${approved}/${s.files.length} approved${where}${bell}`;
+      status.tooltip = `Open ReviewLens. ${s.needsAiCount > 0 ? `${s.needsAiCount} file(s) not reviewed by AI yet.` : 'AI review up to date.'}${unread > 0 ? ` ${unread} new review update(s).` : ''}`;
     }
     status.show();
   };
@@ -55,6 +58,7 @@ export function activate(context: vscode.ExtensionContext): void {
     status,
     watcher,
     controller.onDidChange(updateStatus),
+    controller.watcher.onDidChange(updateStatus),
     vscode.window.registerWebviewViewProvider(SidebarProvider.viewId, sidebar),
     vscode.commands.registerCommand('reviewLens.runReview', () => controller.runReview()),
     vscode.commands.registerCommand('reviewLens.refresh', () => controller.reload()),
@@ -65,17 +69,28 @@ export function activate(context: vscode.ExtensionContext): void {
       }
       await controller.setMode('pr');
     }),
+    vscode.commands.registerCommand('reviewLens.revealPanel', async () => {
+      if (!sidebar.reveal()) {
+        // The view's own focus command; it returns nothing (see the note above about workbench commands).
+        await vscode.commands.executeCommand('reviewLens.changes.focus').then(undefined, () => undefined);
+      }
+    }),
+    vscode.commands.registerCommand('reviewLens.checkActivity', () => controller.watcher.check(true)),
     vscode.commands.registerCommand('reviewLens.signIn', () => controller.signIn()),
     vscode.commands.registerCommand('reviewLens.useToken', () => controller.useToken()),
     vscode.commands.registerCommand('reviewLens.signOut', () => controller.signOut()),
     vscode.commands.registerCommand('reviewLens.clearSavedResults', () => controller.clearSavedResults()),
     vscode.commands.registerCommand('reviewLens.openSettings', () => openSettingsPicker()),
+    vscode.commands.registerCommand('reviewLens.manageRules', () => openRulesMenu(controller)),
+    vscode.commands.registerCommand('reviewLens.newRule', () => newRuleFile(controller, 'rule')),
+    vscode.commands.registerCommand('reviewLens.newSkill', () => newRuleFile(controller, 'skill')),
     vscode.workspace.onDidSaveTextDocument(scheduleRefresh),
     vscode.workspace.onDidChangeWorkspaceFolders(scheduleRefresh),
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration('reviewLens')) {
         scheduleRefresh();
       }
+
     }),
     vscode.window.onDidChangeWindowState((s) => {
       if (s.focused) {

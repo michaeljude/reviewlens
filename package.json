@@ -1,8 +1,8 @@
 {
   "name": "reviewlens",
   "displayName": "ReviewLens: AI Change Review",
-  "description": "Explain, categorise and approve AI-written code changes, file by file: your local changes and GitHub pull requests or GitLab merge requests.",
-  "version": "0.1.0",
+  "description": "Explain, categorise and approve AI-written code changes, file by file: your local changes and GitHub pull requests or GitLab merge requests, with comments, reviews and notifications.",
+  "version": "0.3.0",
   "publisher": "JudeMichaeldeRoma",
   "license": "MIT",
   "preview": true,
@@ -41,7 +41,10 @@
     "pull request",
     "merge request",
     "github",
-    "gitlab"
+    "gitlab",
+    "notifications",
+    "review rules",
+    "skills"
   ],
   "main": "./out/extension.js",
   "activationEvents": [
@@ -75,7 +78,7 @@
       },
       {
         "command": "reviewLens.refresh",
-        "title": "Refresh changes",
+        "title": "Refresh",
         "category": "ReviewLens",
         "icon": "$(refresh)"
       },
@@ -84,6 +87,22 @@
         "title": "Settings",
         "category": "ReviewLens",
         "icon": "$(gear)"
+      },
+      {
+        "command": "reviewLens.manageRules",
+        "title": "Review rules and skills",
+        "category": "ReviewLens",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "reviewLens.newRule",
+        "title": "New review rule",
+        "category": "ReviewLens"
+      },
+      {
+        "command": "reviewLens.newSkill",
+        "title": "New review skill",
+        "category": "ReviewLens"
       },
       {
         "command": "reviewLens.clearSavedResults",
@@ -95,6 +114,17 @@
         "title": "Show pull / merge requests",
         "category": "ReviewLens",
         "icon": "$(git-pull-request)"
+      },
+      {
+        "command": "reviewLens.checkActivity",
+        "title": "Check for review activity now",
+        "category": "ReviewLens",
+        "icon": "$(bell)"
+      },
+      {
+        "command": "reviewLens.revealPanel",
+        "title": "Show the ReviewLens panel",
+        "category": "ReviewLens"
       },
       {
         "command": "reviewLens.signIn",
@@ -128,6 +158,11 @@
           "command": "reviewLens.openSettings",
           "when": "view == reviewLens.changes",
           "group": "navigation@3"
+        },
+        {
+          "command": "reviewLens.manageRules",
+          "when": "view == reviewLens.changes",
+          "group": "rules@1"
         }
       ]
     },
@@ -183,6 +218,19 @@
           "default": 300,
           "description": "Give up on a CLI backend after this many seconds."
         },
+        "reviewLens.useRules": {
+          "type": "boolean",
+          "default": true,
+          "description": "Have the AI check changes against your review rules (`.reviewlens/rules/*.md`), review skills (`.reviewlens/skills/<name>/SKILL.md`) and personal rules. Broken rules show as findings on each file."
+        },
+        "reviewLens.personalRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Your own review rules, one per entry, applied to every file. For rules your team shares, add Markdown files to `.reviewlens/rules/` in the repository instead."
+        },
         "reviewLens.areas": {
           "type": "object",
           "additionalProperties": {
@@ -226,6 +274,11 @@
           },
           "default": [],
           "description": "Self-hosted GitLab servers whose names don't contain \"gitlab\", for example code.example.com."
+        },
+        "reviewLens.notifications.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "When you press Refresh in the pull/merge requests tab, tell you about new review requests, and about comments, approvals and change requests from others on your own pull/merge requests. Nothing is checked in the background."
         }
       }
     }

@@ -74,7 +74,9 @@ What this concept focuses on instead of bug-finding: explanation-first review fo
 1. ✅ Local changes panel: file list, area and change-type grouping, per-file approval.
 2. ✅ Review packet + backends (Copilot, Cursor agent, Claude Code), triggered by a button, with saved results.
 3. ✅ GitHub/GitLab PR and MR view (read-only) with area lanes and teammate comments.
-4. Next: posting reviews and comments, resolving threads in the editor, code owners per lane, own API key backend, "dependents" list, proof attachments, MCP chat tools.
+4. ✅ Comments in the editor (comment, reply, resolve), posting reviews, reviewer states and notifications on Refresh.
+5. ✅ Developer review rules and skills (`.reviewlens/rules`, `.reviewlens/skills`, personal rules), with per-file findings.
+6. Next: applying suggested changes, code owners per lane, own API key backend, "dependents" list, proof attachments, MCP chat tools.
 
 ## Mockups
 
